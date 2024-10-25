@@ -1,5 +1,6 @@
 package com.example.utslecture
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,10 +21,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
         supportActionBar?.hide()
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -32,7 +31,12 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavigation.setupWithNavController(navController)
         hideBottomNavigation()
+
     }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
 
     fun hideBottomNavigation() {
         bottomNavigation.visibility = View.GONE
@@ -41,4 +45,5 @@ class MainActivity : AppCompatActivity() {
     fun showBottomNavigation() {
         bottomNavigation.visibility = View.VISIBLE
     }
+
 }

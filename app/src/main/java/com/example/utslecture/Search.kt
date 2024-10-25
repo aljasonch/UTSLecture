@@ -1,59 +1,74 @@
 package com.example.utslecture
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.appcompat.widget.SearchView
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Search.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Search : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        val view = inflater.inflate(R.layout.fragment_search, container, false)
+
+        val searchView = view.findViewById<SearchView>(R.id.searchView)
+        searchView.queryHint = "Search"
+
+        // Set click listeners for the CardViews
+        view.findViewById<CardView>(R.id.politics_card).setOnClickListener {
+            navigateToCategory("Politics")
+        }
+
+        view.findViewById<CardView>(R.id.finance_card).setOnClickListener {
+            navigateToCategory("Finance")
+        }
+
+        view.findViewById<CardView>(R.id.education_card).setOnClickListener {
+            navigateToCategory("Education")
+        }
+
+        view.findViewById<CardView>(R.id.health_card).setOnClickListener {
+            navigateToCategory("Health")
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Search.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Search().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun navigateToCategory(category: String) {
+        val bundle = Bundle().apply {
+            putString("category", category) // Pass the category string as an argument
+        }
+        findNavController().navigate(R.id.Category, bundle) // Use the ID of the destination fragment
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val recyclerViewPopular = view.findViewById<RecyclerView>(R.id.recyclerViewPopular)
+        recyclerViewPopular.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewPopular.adapter = NewsAdapter {
+            findNavController().navigate(R.id.action_search_to_news) // Navigasi dari "Popular"
+        }
+
+        // Inisialisasi RecyclerView untuk "Recent"
+        val recyclerViewRecent = view.findViewById<RecyclerView>(R.id.recyclerViewRecent)
+        recyclerViewRecent.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewRecent.adapter = NewsAdapter {
+            findNavController().navigate(R.id.action_search_to_news) // Navigasi dari "Recent"
+        }
+
+        // Inisialisasi RecyclerView untuk "Trending"
+        val recyclerViewTrending = view.findViewById<RecyclerView>(R.id.recyclerViewTrending)
+        recyclerViewTrending.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewTrending.adapter = NewsAdapter {
+            findNavController().navigate(R.id.action_search_to_news) // Navigasi dari "Trending"
+        }
     }
 }

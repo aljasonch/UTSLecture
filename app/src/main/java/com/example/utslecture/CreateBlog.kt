@@ -5,13 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textview.MaterialTextView
 
-class Home : BaseAuth() {
-
+class CreateBlog : Fragment() {
+    private lateinit var saveButton: MaterialTextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -21,20 +19,16 @@ class Home : BaseAuth() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as MainActivity).showBottomNavigation()
-
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_create_blog, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        saveButton = view.findViewById(R.id.save_button)
 
-        val newsRecyclerView = view.findViewById<RecyclerView>(R.id.newsRecyclerView)
-        val adapter = NewsAdapter {
-            findNavController().navigate(R.id.action_home_to_news)
+        saveButton.setOnClickListener {
+            findNavController().navigate(R.id.action_createBlog_to_ProfileFragment)
         }
-
-        newsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        newsRecyclerView.adapter = adapter
     }
 
 }

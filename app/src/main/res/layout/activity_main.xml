@@ -15,7 +15,10 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         tools:ignore="MissingConstraints" />
 
-
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"

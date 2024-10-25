@@ -4,35 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/Home">
+
     <fragment
         android:id="@+id/Home"
         android:name="com.example.utslecture.Home"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_to_news"
+            app:destination="@id/News" />
+    </fragment>
+
     <fragment
         android:id="@+id/Search"
         android:name="com.example.utslecture.Search"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/action_search_to_category"
+        app:destination="@id/Category" />
+        <action
+            android:id="@+id/action_search_to_news"
+            app:destination="@id/News" />
+    </fragment>
+
     <fragment
         android:id="@+id/Profile"
         android:name="com.example.utslecture.Profile"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
-            android:id="@+id/action_Profile_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            android:id="@+id/action_profile_to_editProfileFragment"
+        app:destination="@id/editProfileFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/Bookmark"
         android:name="com.example.utslecture.Bookmark"
         android:label="Bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark"/>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.utslecture.Login"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -40,19 +57,54 @@
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/Home" />
     </fragment>
+
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.utslecture.EditProfile"
-        android:label="fragment_edit_profile"
+        android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
+
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.utslecture.Register"
-        android:label="fragment_register"
+        android:label="Register"
         tools:layout="@layout/fragment_register" />
+
     <fragment
         android:id="@+id/editProfilePictureFragment"
         android:name="com.example.utslecture.EditProfilePicture"
-        android:label="fragment_edit_profile_picture"
+        android:label="Edit Profile Picture"
         tools:layout="@layout/fragment_edit_profile_picture" />
+
+    <fragment
+        android:id="@+id/Category"
+        android:name="com.example.utslecture.Category"
+        android:label="Category"
+        tools:layout="@layout/fragment_category">
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_category_to_news"
+            app:destination="@id/News" />
+    </fragment>
+<fragment
+    android:id="@+id/Settings"
+    android:name="com.example.utslecture.Setting"
+    android:label="@string/settings"
+    tools:layout="@layout/fragment_setting"/>
+    <fragment
+        android:id="@+id/News"
+        android:name="com.example.utslecture.News"
+        android:label="News"
+        tools:layout="@layout/fragment_news" />
+<fragment
+    android:id="@+id/CreateBlog"
+    android:name="com.example.utslecture.CreateBlog"
+    android:label="@string/create_blog"
+    tools:layout="@layout/fragment_create_blog">
+    <action
+        android:id="@+id/action_createBlog_to_ProfileFragment"
+        app:destination="@id/Profile" />
+</fragment>
 </navigation>

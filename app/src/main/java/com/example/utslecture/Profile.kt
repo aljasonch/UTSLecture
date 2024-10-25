@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 
 class Profile : Fragment() {
     private lateinit var editProfileButton: Button
+    private lateinit var settingButton: ImageView
+    private lateinit var createBlogButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,6 +30,14 @@ class Profile : Fragment() {
         editProfileButton = view.findViewById<Button>(R.id.edit_profile_button)
         editProfileButton.setOnClickListener {
             findNavController().navigate(R.id.editProfileFragment)
+        }
+        settingButton = view.findViewById<ImageView>(R.id.SettingButton)
+        settingButton.setOnClickListener {
+            findNavController().navigate(R.id.Settings)
+        }
+        createBlogButton = view.findViewById<Button>(R.id.CreateBlogButton)
+        createBlogButton.setOnClickListener {
+            findNavController().navigate(R.id.CreateBlog)
         }
     }
 }
