@@ -16,8 +16,5 @@ Fitur-fitur yang sudah di implementasikan
 3. Tampilan sudah hampir seluruh, tinggal beberapa yang belum seperti page ai, page redeem point, dan implementasi crud create blog beserta fitur komen
 
 Notes:
-Kristoforus Kharis Putra Sadsuitubun (00000067127)
-David Moses Mantiri Kalesaran (000000067468)
 
-Kurang berpartisipasi dalam pembuatan projek aplikasi ini
-- Jason
+Kristoforus Kharis Putra Sadsuitubun (00000067127) & David Moses Mantiri Kalesaran (000000067468) Kurang berpartisipasi dalam pembuatan projek aplikasi ini.
