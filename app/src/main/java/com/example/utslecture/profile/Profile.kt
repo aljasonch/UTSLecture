@@ -1,4 +1,4 @@
-package com.example.utslecture
+package com.example.utslecture.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
+import com.example.utslecture.R
 
 class Profile : Fragment() {
     private lateinit var editProfileButton: Button

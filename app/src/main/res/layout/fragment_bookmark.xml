@@ -8,7 +8,7 @@
     android:layout_marginTop="36dp"
     android:orientation="vertical"
     android:layout_marginBottom="72dp"
-    tools:context=".Bookmark">
+    tools:context=".bookmark.Bookmark">
 
     <TextView
         android:layout_width="match_parent"

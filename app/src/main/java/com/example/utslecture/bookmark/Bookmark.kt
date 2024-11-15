@@ -1,4 +1,4 @@
-package com.example.utslecture
+package com.example.utslecture.bookmark
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
+import com.example.utslecture.R
+
 class Bookmark : Fragment() {
 
     override fun onCreateView(

@@ -1,9 +1,10 @@
-package com.example.utslecture
+package com.example.utslecture.auth
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.utslecture.R
 import com.google.firebase.auth.FirebaseAuth
 
 open class BaseAuth : Fragment() {

@@ -1,4 +1,4 @@
-package com.example.utslecture
+package com.example.utslecture.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.utslecture.blog.BlogAdapter
+import com.example.utslecture.R
 
 class Search : Fragment() {
 
@@ -53,21 +55,21 @@ class Search : Fragment() {
 
         val recyclerViewPopular = view.findViewById<RecyclerView>(R.id.recyclerViewPopular)
         recyclerViewPopular.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewPopular.adapter = NewsAdapter {
+        recyclerViewPopular.adapter = BlogAdapter {
             findNavController().navigate(R.id.action_search_to_news) // Navigasi dari "Popular"
         }
 
         // Inisialisasi RecyclerView untuk "Recent"
         val recyclerViewRecent = view.findViewById<RecyclerView>(R.id.recyclerViewRecent)
         recyclerViewRecent.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewRecent.adapter = NewsAdapter {
+        recyclerViewRecent.adapter = BlogAdapter {
             findNavController().navigate(R.id.action_search_to_news) // Navigasi dari "Recent"
         }
 
         // Inisialisasi RecyclerView untuk "Trending"
         val recyclerViewTrending = view.findViewById<RecyclerView>(R.id.recyclerViewTrending)
         recyclerViewTrending.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewTrending.adapter = NewsAdapter {
+        recyclerViewTrending.adapter = BlogAdapter {
             findNavController().navigate(R.id.action_search_to_news) // Navigasi dari "Trending"
         }
     }

@@ -1,6 +1,6 @@
-package com.example.utslecture
+package com.example.utslecture.auth
 
-import ProfileUser
+import com.example.utslecture.data.ProfileUser
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.utslecture.home.HomeActivity
+import com.example.utslecture.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -28,7 +30,7 @@ class Register : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as MainActivity).hideBottomNavigation()
+        (activity as HomeActivity).hideBottomNavigation()
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
@@ -81,7 +83,7 @@ class Register : Fragment() {
                 .document(userId) // Document ID
                 .set(userProfile)
                 .addOnSuccessListener {
-                    Log.d("Firestore", "User profile created successfully")
+                    Log.d("Firestore", "com.example.utslecture.data.User profile created successfully")
                 }
                 .addOnFailureListener { e ->
                     Log.w("Firestore", "Error adding document", e)

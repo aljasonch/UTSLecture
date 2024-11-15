@@ -1,4 +1,4 @@
-package com.example.utslecture
+package com.example.utslecture.profile
 
 import android.os.Bundle
 import android.view.Gravity
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.utslecture.R
 import com.google.firebase.auth.FirebaseAuth
 
 class Setting : Fragment() {

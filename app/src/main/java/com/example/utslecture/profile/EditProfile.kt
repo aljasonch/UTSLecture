@@ -1,6 +1,6 @@
-package com.example.utslecture
+package com.example.utslecture.profile
 
-import ProfileUser
+import com.example.utslecture.data.ProfileUser
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.utslecture.R
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -83,7 +84,7 @@ class EditProfile : Fragment() {
     private fun updateUserProfile() {
         val userId = auth.currentUser?.uid
         if (userId == null) {
-            Toast.makeText(requireContext(), "User is not logged in", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "com.example.utslecture.data.User is not logged in", Toast.LENGTH_SHORT).show()
             return // Hentikan eksekusi jika userId null
         }
 

@@ -7,7 +7,7 @@
     android:layout_marginTop="36dp"
     android:orientation="vertical"
     android:layout_marginBottom="72dp"
-    tools:context=".News">
+    tools:context=".blog.Blog">
 
     <ScrollView
         android:layout_width="match_parent"

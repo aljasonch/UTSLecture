@@ -1,3 +1,5 @@
+package com.example.utslecture.data
+
 data class ProfileUser(
     var userId: String = "",
     var email: String = "",

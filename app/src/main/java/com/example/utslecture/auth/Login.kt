@@ -1,4 +1,4 @@
-package com.example.utslecture
+package com.example.utslecture.auth
 
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +11,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
+import com.example.utslecture.home.HomeActivity
+import com.example.utslecture.R
 import com.google.firebase.auth.FirebaseAuth
 
 class Login : Fragment() {
@@ -28,7 +29,7 @@ class Login : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideBottomNavigation()
+        (activity as HomeActivity).hideBottomNavigation()
         val registerButton = view.findViewById<TextView>(R.id.register_text)
         val emailInput = view.findViewById<EditText>(R.id.email_input_field)
         val passwordInput =

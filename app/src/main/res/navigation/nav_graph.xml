@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/Home"
-        android:name="com.example.utslecture.Home"
+        android:name="com.example.utslecture.home.Home"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/Search"
-        android:name="com.example.utslecture.Search"
+        android:name="com.example.utslecture.search.Search"
         android:label="Search"
         tools:layout="@layout/fragment_search">
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/Profile"
-        android:name="com.example.utslecture.Profile"
+        android:name="com.example.utslecture.profile.Profile"
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -41,13 +41,13 @@
 
     <fragment
         android:id="@+id/Bookmark"
-        android:name="com.example.utslecture.Bookmark"
+        android:name="com.example.utslecture.bookmark.Bookmark"
         android:label="Bookmark"
         tools:layout="@layout/fragment_bookmark"/>
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.utslecture.Login"
+        android:name="com.example.utslecture.auth.Login"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
@@ -60,25 +60,25 @@
 
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.utslecture.EditProfile"
+        android:name="com.example.utslecture.profile.EditProfile"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.utslecture.Register"
+        android:name="com.example.utslecture.auth.Register"
         android:label="Register"
         tools:layout="@layout/fragment_register" />
 
     <fragment
         android:id="@+id/editProfilePictureFragment"
-        android:name="com.example.utslecture.EditProfilePicture"
+        android:name="com.example.utslecture.profile.EditProfilePicture"
         android:label="Edit Profile Picture"
         tools:layout="@layout/fragment_edit_profile_picture" />
 
     <fragment
         android:id="@+id/Category"
-        android:name="com.example.utslecture.Category"
+        android:name="com.example.utslecture.search.Category"
         android:label="Category"
         tools:layout="@layout/fragment_category">
         <argument
@@ -90,17 +90,17 @@
     </fragment>
 <fragment
     android:id="@+id/Settings"
-    android:name="com.example.utslecture.Setting"
+    android:name="com.example.utslecture.profile.Setting"
     android:label="@string/settings"
     tools:layout="@layout/fragment_setting"/>
     <fragment
         android:id="@+id/News"
-        android:name="com.example.utslecture.News"
+        android:name="com.example.utslecture.blog.Blog"
         android:label="News"
         tools:layout="@layout/fragment_news" />
 <fragment
     android:id="@+id/CreateBlog"
-    android:name="com.example.utslecture.CreateBlog"
+    android:name="com.example.utslecture.blog.CreateBlog"
     android:label="@string/create_blog"
     tools:layout="@layout/fragment_create_blog">
     <action
