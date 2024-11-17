@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "1032758132187",
     "project_id": "utslecture",
-    "storage_bucket": "utslecture.appspot.com"
+    "storage_bucket": "utslecture.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +12,20 @@
           "package_name": "com.example.utslecture"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1032758132187-3pjs5kchloqi1j63ns239c7i218r2qbi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.utslecture",
+            "certificate_hash": "a8d3ee5f712da2833563ec01022d4acc5be6bd48"
+          }
+        },
+        {
+          "client_id": "1032758132187-ue1ae9bvm0r4m949h7mbl82pgo5i5kkd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA5FPPORhsz_GmhuYW5CbCKmm5WFfsy-1Q"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032758132187-ue1ae9bvm0r4m949h7mbl82pgo5i5kkd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

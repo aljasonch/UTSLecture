@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Ailog</string>
-    <string name="login">Sign In</string>
+    <string name="login">Welcome Back!</string>
     <string name="email_input_message">Email</string>
     <string name="password_input_message">Password</string>
     <string name="register">Register</string>
     <string name="register_button">Register</string>
     <string name="submit_button">Login</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="register_text"><u>Register Now</u></string>
+    <string name="register_text">Register Now</string>
     <string name="account">Don’t have an account?</string>
     <string name="repeat_password_input_message">Ulangi Password</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -58,4 +58,6 @@
     <string name="identity_news">John Smith • Dec 27, 2024 • Health</string>
     <string name="share">share</string>
     <string name="lorem_ipsum_mauris_ac_elit_porttitor">lorem ipsum Mauris ac elit porttitor</string>
+    <string name="login_hint"><![CDATA[Enter Your Email & Password!]]></string>
+    <string name="default_web_client_id">1032758132187-eeldcj3pgllchj40gu6nh247t40pjumd.apps.googleusercontent.com</string>
 </resources>
