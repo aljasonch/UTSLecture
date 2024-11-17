@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class Login : Fragment() {
     private lateinit var auth: FirebaseAuth
@@ -40,7 +41,7 @@ class Login : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firestore = FirebaseFirestore.getInstance() // Inisialisasi Firestore
+        firestore = FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(
@@ -55,10 +56,14 @@ class Login : Fragment() {
         (activity as HomeActivity).hideBottomNavigation()
 
         val registerButton = view.findViewById<TextView>(R.id.register_text)
-        val emailInput = view.findViewById<androidx.appcompat.widget.AppCompatEditText>(R.id.email_input_field)
-        val passwordInput = view.findViewById<androidx.appcompat.widget.AppCompatEditText>(R.id.password_input_field)
-        val loginButton = view.findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.submit_button)
-        val googleSignInButton = view.findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.button)
+        val emailInput =
+            view.findViewById<androidx.appcompat.widget.AppCompatEditText>(R.id.email_input_field)
+        val passwordInput =
+            view.findViewById<androidx.appcompat.widget.AppCompatEditText>(R.id.password_input_field)
+        val loginButton =
+            view.findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.submit_button)
+        val googleSignInButton =
+            view.findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.button)
 
         auth = FirebaseAuth.getInstance()
 
@@ -70,7 +75,11 @@ class Login : Fragment() {
             val email = emailInput.text.toString().trim()
             val password = passwordInput.text.toString().trim()
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Email and Password are required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Email and Password are required",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity()) { task ->
@@ -79,7 +88,11 @@ class Login : Fragment() {
                             findNavController().navigate(R.id.Home)
                         } else {
                             Log.w("Login", "signInWithEmail:failure", task.exception)
-                            Toast.makeText(requireContext(), "Email or Password Wrong", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Email or Password Wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
             }
@@ -111,35 +124,88 @@ class Login : Fragment() {
         }
     }
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount?) {
+        val credential = GoogleAuthProvider.getCredential(acct?.idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     Log.d("Login", "signInWithCredential:success")
-                    // Simpan data ProfileUser ke Firestore
                     val user = auth.currentUser
                     user?.let {
                         val uid = it.uid
-                        val profileUser = ProfileUser(
-                            userId = uid,
-                            email = acct.email ?: "",
-                            name = acct.displayName ?: "",
-                            // Tambahkan data lain jika tersedia dari acct
-                        )
-                        firestore.collection("users").document(uid)
-                            .set(profileUser)
-                            .addOnSuccessListener {
-                                Log.d("Firestore", "Data ProfileUser berhasil disimpan")
+                        val userDocRef = firestore.collection("users").document(uid)
+
+                        // Cek apakah dokumen sudah ada
+                        userDocRef.get()
+                            .addOnSuccessListener { document ->
+                                if (document.exists()) {
+                                    // Dokumen ada, update field tertentu kecuali 'name'
+                                    val profileUpdates = hashMapOf<String, Any>(
+                                        "email" to acct?.email.orEmpty()
+                                        // Tambahkan field lain yang ingin diupdate, kecuali 'name'
+                                    )
+
+                                    userDocRef.set(profileUpdates, SetOptions.merge())
+                                        .addOnSuccessListener {
+                                            Log.d(
+                                                "Firestore",
+                                                "Data ProfileUser berhasil diperbarui"
+                                            )
+                                            findNavController().navigate(R.id.Home)
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Log.w(
+                                                "Firestore",
+                                                "Error memperbarui data ProfileUser",
+                                                e
+                                            )
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Terjadi kesalahan saat memperbarui data.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                } else {
+                                    // Dokumen tidak ada, buat dokumen baru dengan semua field
+                                    val profileUser = ProfileUser(
+                                        userId = uid,
+                                        email = acct?.email.orEmpty(),
+                                        name = acct?.displayName.orEmpty()
+                                        // Tambahkan field awal lainnya di sini
+                                    )
+
+                                    userDocRef.set(profileUser)
+                                        .addOnSuccessListener {
+                                            Log.d("Firestore", "Data ProfileUser berhasil disimpan")
+                                            findNavController().navigate(R.id.Home)
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Log.w(
+                                                "Firestore",
+                                                "Error menyimpan data ProfileUser",
+                                                e
+                                            )
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Terjadi kesalahan saat menyimpan data.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
                             }
                             .addOnFailureListener { e ->
-                                Log.w("Firestore", "Error menyimpan data ProfileUser", e)
+                                Log.w("Firestore", "Error memeriksa dokumen", e)
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Terjadi kesalahan.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                     }
-                    findNavController().navigate(R.id.Home)
                 } else {
                     Log.w("Login", "signInWithCredential:failure", task.exception)
-                    Toast.makeText(requireContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Autentikasi gagal.", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
     }
