@@ -1,4 +1,4 @@
-package com.example.utslecture.profile
+package com.example.utslecture.Setting
 
 import android.os.Bundle
 import android.view.Gravity
@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.utslecture.R
+import com.google.api.Distribution.BucketOptions.Linear
 import com.google.firebase.auth.FirebaseAuth
 
 class Setting : Fragment() {
@@ -25,7 +27,6 @@ class Setting : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
 
         val logOutTextView: TextView = view.findViewById(R.id.logOut)
@@ -34,6 +35,30 @@ class Setting : Fragment() {
         }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val helpButton =
+            view.findViewById<LinearLayout>(R.id.helpButton)
+        val privacyButton =
+            view.findViewById<LinearLayout>(R.id.privacyButton)
+        val aboutButton =
+            view.findViewById<LinearLayout>(R.id.aboutButton)
+        val redeemButton =
+            view.findViewById<LinearLayout>(R.id.redeemButton)
+        super.onViewCreated(view, savedInstanceState)
+        helpButton.setOnClickListener {
+            findNavController().navigate(R.id.helpFragment)
+        }
+        privacyButton.setOnClickListener {
+            findNavController().navigate(R.id.privacyFragment)
+        }
+        aboutButton.setOnClickListener {
+            findNavController().navigate(R.id.aboutFragment)
+        }
+        redeemButton.setOnClickListener{
+            findNavController().navigate(R.id.redeemFragment)
+        }
     }
 
     private fun logout() {

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="24dp"
     android:layout_marginTop="36dp"
-    android:orientation="vertical"
     android:layout_marginBottom="72dp"
+    android:orientation="vertical"
     tools:context=".search.Search">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/search"
         android:textSize="36sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -37,11 +37,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/category"
-                android:textSize="24sp"
                 android:layout_marginVertical="16dp"
                 android:layout_marginStart="10dp"
-                android:textStyle="bold"/>
+                android:text="@string/category"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <androidx.gridlayout.widget.GridLayout
                 android:layout_width="match_parent"
@@ -56,17 +56,17 @@
                 <LinearLayout
 
                     android:layout_width="0dp"
-                    app:layout_columnWeight="1"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    app:layout_columnWeight="1">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/politics_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
                         android:layout_margin="8dp"
+                        app:cardCornerRadius="8dp"
                         app:layout_gravity="fill_horizontal">
 
                         <ImageView
@@ -76,29 +76,30 @@
                             android:src="@drawable/politics_image" />
 
                     </androidx.cardview.widget.CardView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
                         android:text="@string/international_politics"
-                        android:textStyle="bold"
                         android:textSize="16sp"
-                        android:layout_marginVertical="6dp" />
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
 
-                    app:layout_columnWeight="1"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    app:layout_columnWeight="1">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/finance_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
                         android:layout_margin="8dp"
+                        app:cardCornerRadius="8dp"
                         app:layout_gravity="fill_horizontal">
 
                         <ImageView
@@ -107,29 +108,29 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/finance_image" />
                     </androidx.cardview.widget.CardView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
                         android:text="@string/finance"
-                        android:textStyle="bold"
                         android:textSize="16sp"
-                        android:layout_marginVertical="6dp" />
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-
-                    app:layout_columnWeight="1"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    app:layout_columnWeight="1">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/education_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
                         android:layout_margin="8dp"
+                        app:cardCornerRadius="8dp"
                         app:layout_gravity="fill_horizontal">
 
                         <ImageView
@@ -138,29 +139,29 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/education_image" />
                     </androidx.cardview.widget.CardView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
                         android:text="@string/education"
-                        android:textStyle="bold"
                         android:textSize="16sp"
-                        android:layout_marginVertical="6dp" />
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-
-                    app:layout_columnWeight="1"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    app:layout_columnWeight="1">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/health_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
                         android:layout_margin="8dp"
+                        app:cardCornerRadius="8dp"
                         app:layout_gravity="fill_horizontal">
 
                         <ImageView
@@ -169,36 +170,36 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/health_image" />
                     </androidx.cardview.widget.CardView>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
                         android:text="@string/health"
-                        android:textStyle="bold"
                         android:textSize="16sp"
-                        android:layout_marginVertical="6dp" />
+                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.gridlayout.widget.GridLayout>
 
-            <!-- Example News Item Placeholder -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/finance"
                 android:layout_marginVertical="16dp"
+                android:text="Popular"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPopular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/international_politics"
                 android:layout_marginVertical="16dp"
+                android:text="New"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -211,10 +212,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/health"
                 android:layout_marginVertical="16dp"
+                android:text="Trending"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewTrending"
                 android:layout_width="match_parent"

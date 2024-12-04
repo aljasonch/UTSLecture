@@ -1,46 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="24dp"
     android:layout_marginTop="36dp"
     android:orientation="vertical"
-    tools:context=".blog.CreateBlog">
+    tools:context=".blog.UpdateBlog">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:ignore="UselessParent">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/create_blog"
+            android:text="Update Blog"
             android:textSize="28sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/save_button"
+            android:id="@+id/update_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/save"
+            android:text="Update"
             android:textColor="@color/dark_blue"
             android:textSize="20sp" />
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/image_container"
+        android:id="@+id/update_image_container"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_marginTop="36dp"
         android:layout_marginBottom="24dp">
 
+        <ImageView
+            android:id="@+id/update_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
         <LinearLayout
+            android:id="@+id/update_image_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/dotted_border"
@@ -51,7 +57,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_folder"
-                app:tint="#CCCCCC"/>
+                app:tint="#CCCCCC" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,49 +65,42 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/from_gallery"
                 android:textColor="#666666"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:visibility="gone"/>
     </FrameLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Title"
         android:textColor="#333333"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/title_input"
+        android:id="@+id/update_title_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/edit_text_background"
-        android:hint="John Smith Gunawan"
         android:padding="12dp"
-        android:textSize="14sp"
-        android:layout_marginBottom="24dp"/>
+        android:textSize="14sp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Category"
         android:textColor="#333333"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="16sp" />
 
     <Spinner
-        android:id="@+id/category_spinner"
+        android:id="@+id/update_category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:entries="@array/categories" />
-    <!-- Description Section -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,15 +108,13 @@
         android:textColor="#333333"
         android:textSize="16sp"
         android:layout_marginBottom="8dp"/>
-
     <EditText
-        android:id="@+id/description_input"
+        android:id="@+id/update_description_input"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/edit_text_background"
         android:gravity="top"
-        android:hint="Add your news here..."
         android:padding="12dp"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
 
 </LinearLayout>

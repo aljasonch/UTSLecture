@@ -60,4 +60,17 @@
     <string name="lorem_ipsum_mauris_ac_elit_porttitor">lorem ipsum Mauris ac elit porttitor</string>
     <string name="login_hint"><![CDATA[Enter Your Email & Password!]]></string>
     <string name="default_web_client_id">1032758132187-eeldcj3pgllchj40gu6nh247t40pjumd.apps.googleusercontent.com</string>
+    <string name="data_location_privacy"><b>Data Lokasi:</b> Aplikasi ini dapat mengumpulkan data lokasi Anda untuk meningkatkan akurasi fitur-fitur seperti rekomendasi lokal, navigasi, dan lainnya. Data lokasi yang dikumpulkan dapat mencakup lokasi waktu nyata atau lokasi perkiraan, bergantung pada izin yang Anda berikan. Kami menggunakan data ini hanya untuk keperluan aplikasi dan tidak membagikannya kepada pihak ketiga tanpa persetujuan Anda.</string>
+    <string name="information_user"><b>Informasi Pribadi:</b> Aplikasi ini dapat mengumpulkan informasi pribadi Anda, seperti nama, alamat email, dan nomor telepon, untuk memungkinkan fitur-fitur tertentu dan meningkatkan layanan kami. Informasi ini dikumpulkan hanya jika Anda memberikannya secara sukarela, misalnya, saat mendaftar atau mengisi formulir kontak. Kami berkomitmen untuk menjaga kerahasiaan data ini dan tidak akan membagikannya kepada pihak ketiga tanpa persetujuan Anda.</string>
+    <string name="app_desc"><b>Ailog</b> merupakan aplikasi blog yang dapat diakses oleh semua pengguna dan kalangan umur, seperti pada blog pada umumnya pengguna dapat mengupload artikel dan mendapat hadiah berdasarkan engagement yang didapat pengguna melalui artikel baik itu views maupun like, dengan fitur unggulan berupa kecerdasan buatan (AI) yang mampu menghasilkan ringkasan dari berbagai artikel blog. Aplikasi ini memungkinkan pengguna/user untuk menjelajahiartikel blog berdasarkan kategori, termasuk blog trending dan topik lainnya, sehingga mereka dapat dengan cepat mendapatkan kesimpulan dari artikelnya tanpa harus membaca keseluruhan artikel. Dengan fitur ringkasan ini, pengguna dapat menghemat waktu dan mendapatkan informasi yang relevan secara efisien, menjadikan pengalaman membaca lebih menyenangkan dan informatif.</string>
+    <string name="dev_name">Ailog Developer Team</string>
+    <string name="from_gallery">From Gallery</string>
+    <string name="help_info"><![CDATA[Help & Info]]></string>
+    <string-array name="categories">
+        <item>Technology</item>
+        <item>Business</item>
+        <item>Sports</item>
+        <item>Entertainment</item>
+        <!-- Tambahkan kategori lainnya sesuai kebutuhan -->
+    </string-array>
 </resources>

@@ -1,68 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="24dp"
-    android:layout_marginTop="36dp"
-    android:orientation="vertical"
-    android:layout_marginBottom="72dp"
-    tools:context=".profile.Setting">
+    android:background="@color/white"
+    tools:context=".Setting.Setting">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings"
-        android:textSize="36sp"
-        android:textStyle="bold"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="72dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/notification"
-        android:textSize="18sp"
-        android:paddingTop="24dp"
-        android:paddingBottom="12dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:text="@string/settings"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/redeem_point"
-        android:textSize="18sp"
-        android:paddingBottom="12dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User Settings"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginVertical="12dp"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/help"
-        android:textSize="18sp"
-        android:paddingBottom="12dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background"
+            android:orientation="vertical"
+           >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/about"
-        android:textSize="18sp"
-        android:paddingBottom="12dp"/>
+            <!-- Notification -->
+            <LinearLayout
+                android:id="@+id/notificationButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/privacy_center"
-        android:textSize="18sp"
-        android:paddingBottom="12dp"/>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_notification"
+                    app:tint="@color/primary_button" />
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/notification"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <!-- Redeem Point -->
+            <LinearLayout
+                android:id="@+id/redeemButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_redeem"
+                    app:tint="@color/primary_button" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/redeem_point"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_info"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginVertical="12dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background"
+            android:orientation="vertical"
+           >
+            <!-- Help -->
+            <LinearLayout
+                android:id="@+id/helpButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_help"
+                    app:tint="@color/primary_button" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/help"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+        <!-- About -->
+        <LinearLayout
+            android:id="@+id/aboutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_about"
+                app:tint="@color/primary_button" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/about"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- Privacy Center -->
+        <LinearLayout
+            android:id="@+id/privacyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_privacy"
+                app:tint="@color/primary_button" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/privacy_center"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Log Out Button -->
     <TextView
         android:id="@+id/logOut"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/rounded_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/log_out"
-        android:textSize="18sp"
         android:textColor="#FF0000"
-        android:paddingTop="24dp"/>
-</LinearLayout>
-</LinearLayout>
+        android:textSize="16sp" />
+
+</LinearLayout></ScrollView>

@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation(libs.play.services.auth)
     implementation(libs.androidx.recyclerview)
     implementation("com.google.firebase:firebase-bom:32.6.0")
@@ -51,6 +53,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.gridlayout)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -2,25 +2,26 @@ package com.example.utslecture.search
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.utslecture.blog.BlogAdapter
 import com.example.utslecture.R
+import com.example.utslecture.blog.BlogAdapter
+import com.example.utslecture.data.Blog
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Category : Fragment() {
-
+    private val db = FirebaseFirestore.getInstance()
     private var category: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             category = it.getString("category")
         }
@@ -40,19 +41,39 @@ class Category : Fragment() {
             findNavController().navigateUp()
         }
 
-        Log.d("CategoryFragment", "Category: $category")
-
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val newsRecyclerView = view.findViewById<RecyclerView>(R.id.newsRecyclerView)
-        val adapter = BlogAdapter {
-            findNavController().navigate(R.id.action_category_to_news)
-        }
 
-        newsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        newsRecyclerView.adapter = adapter
+        db.collection("blogs")
+            .whereEqualTo("category", category) // Filter langsung di query
+            .get()
+            .addOnSuccessListener { documents ->
+                val filteredBlogs = documents.mapNotNull { document ->
+                    document.toObject(Blog::class.java)
+                }
+
+                val adapter = BlogAdapter(filteredBlogs) { blog ->
+                    val bundle = Bundle().apply { // apply untuk inisialisasi bundle
+                        putString("title", blog.title)
+                        putString("content", blog.content)
+                        putString("image", blog.image)
+                        putString("username", blog.username)
+                        putString("uploadDate", blog.uploadDate?.time.toString())
+                    }
+                    findNavController().navigate(R.id.action_category_to_blog, bundle)
+                }
+
+                newsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                newsRecyclerView.adapter = adapter
+
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Category", "Error getting documents: ", exception)
+            }
     }
 }

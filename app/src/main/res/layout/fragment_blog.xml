@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".blog.Blog">
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/back_button" />
+
+    <ImageView
+        android:id="@+id/detail_news_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/images_photo" />
+
+    <TextView
+        android:id="@+id/detail_news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Judul Berita" />
+
+    <TextView
+        android:id="@+id/detail_news_metadata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#666666"
+        android:textSize="14sp"
+        tools:text="Penulis • Tanggal" />
+
+    <TextView
+        android:id="@+id/detail_news_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:lineSpacingMultiplier="1.5"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        tools:text="Isi berita..." />
+
+</LinearLayout>

@@ -69,7 +69,6 @@ class EditProfile : Fragment() {
                             emailInput.setText(it.email)
                             phoneInput.setText(it.phoneNumber)
                             bioInput.setText(it.bio)
-                            // Set userId ke field yang sesuai jika diperlukan
                         }
                     } else {
                         Log.d("EditProfile", "No such document")
