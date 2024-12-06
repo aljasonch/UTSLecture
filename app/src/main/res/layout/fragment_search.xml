@@ -14,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/search"
-        android:textSize="36sp"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/edit_text_background"
         android:queryHint="Search" />
 
@@ -38,7 +38,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
-                android:layout_marginStart="10dp"
                 android:text="@string/category"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -181,10 +180,16 @@
                 </LinearLayout>
             </androidx.gridlayout.widget.GridLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="8dp"
+                android:background="#A9A9A9" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="Popular"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -195,10 +200,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="8dp"
+                android:background="#A9A9A9" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="New"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -209,10 +220,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="8dp"
+                android:background="#A9A9A9" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="Trending"
                 android:textSize="20sp"
                 android:textStyle="bold" />

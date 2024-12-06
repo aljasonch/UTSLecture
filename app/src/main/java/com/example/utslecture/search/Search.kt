@@ -62,14 +62,26 @@ class Search : Fragment() {
         val recyclerViewRecent = view.findViewById<RecyclerView>(R.id.recyclerViewRecent)
         val recyclerViewTrending = view.findViewById<RecyclerView>(R.id.recyclerViewTrending)
 
+        recyclerViewPopular.isNestedScrollingEnabled = false
+        recyclerViewRecent.isNestedScrollingEnabled = false
+        recyclerViewTrending.isNestedScrollingEnabled = false
+
         db.collection("blogs")
             .get()
             .addOnSuccessListener { documents ->
                 val allBlogs = documents.mapNotNull { it.toObject(Blog::class.java) }
 
-                val popularBlogs = allBlogs.sortedByDescending { it.likes }.take(5) // Misalnya, popular berdasarkan likes
-                val recentBlogs = allBlogs.sortedByDescending { it.uploadDate }.take(5)
-                val trendingBlogs = allBlogs.sortedByDescending { it.views }.take(5) // Misalnya, trending berdasarkan views
+                Log.d("SearchFragment", "All Blogs Fetched: ${allBlogs.size}")
+
+                val popularBlogs = allBlogs.sortedByDescending { it.likes }.take(5)
+                val recentBlogs = allBlogs.filter { it.uploadDate != null }
+                    .sortedByDescending { it.uploadDate }
+                    .take(5)
+                val trendingBlogs = allBlogs.sortedByDescending { it.views }.take(5)
+
+                Log.d("SearchFragment", "Popular Blogs: ${popularBlogs.size}")
+                Log.d("SearchFragment", "Recent Blogs: ${recentBlogs.size}")
+                Log.d("SearchFragment", "Trending Blogs: ${trendingBlogs.size}")
 
                 val navigateToBlogDetail: (Blog) -> Unit = { blog ->
                     val bundle = Bundle().apply {
@@ -90,10 +102,13 @@ class Search : Fragment() {
                 recyclerViewRecent.layoutManager = LinearLayoutManager(requireContext())
                 recyclerViewTrending.layoutManager = LinearLayoutManager(requireContext())
 
+                recyclerViewPopular.adapter?.notifyDataSetChanged()
+                recyclerViewRecent.adapter?.notifyDataSetChanged()
+                recyclerViewTrending.adapter?.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
                 Log.w("SearchFragment", "Error getting documents: ", exception)
-                // Handle error, misalnya tampilkan pesan ke pengguna
             }
     }
+
 }

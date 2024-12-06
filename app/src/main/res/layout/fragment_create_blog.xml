@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_background"
-        android:hint="John Smith Gunawan"
+        android:hint="Add your blog title..."
         android:padding="12dp"
         android:textSize="14sp"
         android:layout_marginBottom="24dp"/>

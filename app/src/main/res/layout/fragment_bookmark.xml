@@ -14,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/bookmark"
-        android:textSize="36sp"
+        android:textSize="28sp"
         android:textStyle="bold"/>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/edit_text_background"
         android:queryHint="Search" />
 
@@ -36,7 +36,6 @@
                 android:text="@string/category"
                 android:textSize="24sp"
                 android:layout_marginVertical="16dp"
-                android:layout_marginStart="10dp"
                 android:textStyle="bold"/>
 
             <androidx.gridlayout.widget.GridLayout

@@ -3,6 +3,7 @@ package com.example.utslecture.data
 import java.util.Date
 
 data class Blog(
+    val blogId: String = "",
     val userId: String = "",
     val title: String = "",
     val image: String = "",

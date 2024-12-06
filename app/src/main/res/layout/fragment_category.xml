@@ -5,30 +5,34 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="24dp"
     android:layout_marginTop="36dp"
-    android:orientation="vertical"
     android:layout_marginBottom="72dp"
+    android:orientation="vertical"
     tools:context=".search.Category">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:ignore="UselessParent">
+
         <ImageView
             android:id="@+id/backButton"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             android:contentDescription="@string/back"
             android:src="@drawable/back_button" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/search"
-            android:textSize="32sp"
             android:layout_marginStart="12dp"
-            android:textStyle="bold"/>
+            android:text="@string/search"
+            android:textSize="28sp"
+            android:textStyle="bold" />
     </LinearLayout>
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
@@ -36,11 +40,13 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/edit_text_background"
         android:queryHint="Search" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:orientation="vertical">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"

@@ -113,10 +113,18 @@ class CreateBlog : Fragment() {
     }
 
     private fun saveBlog(imageUrl: String) {
-        val title = titleInput.text.toString()
-        val description = descriptionInput.text.toString()
+        val title = titleInput.text.toString().trim()
+        val content = descriptionInput.text.toString().trim()
         val userId = auth.currentUser?.uid ?: "unknownUserId"
         val selectedCategory = categorySpinner.selectedItem.toString()
+
+        if (title.isEmpty() || content.isEmpty()) {
+            Toast.makeText(requireContext(), "Judul dan konten tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Generate blogId menggunakan UUID
+        val blogId = UUID.randomUUID().toString()
 
         db.collection("users").document(userId)
             .get()
@@ -125,27 +133,42 @@ class CreateBlog : Fragment() {
                     val profileUser = document.toObject(ProfileUser::class.java)
                     val username = profileUser?.username ?: ""
 
-                    val blog = Blog(userId, title, imageUrl, description, 0, 0, username, Date(), selectedCategory)
+                    // Membuat objek Blog dengan data baru
+                    val blog = Blog(
+                        blogId = blogId, // ID unik blog
+                        userId = userId,
+                        title = title,
+                        image = imageUrl,
+                        content = content,
+                        views = 0, // Jumlah views default adalah 0
+                        likes = 0, // Jumlah likes default adalah 0
+                        username = username,
+                        uploadDate = Date(), // Tanggal saat ini
+                        category = selectedCategory
+                    )
 
+                    // Menyimpan blog ke Firestore dengan ID spesifik
                     db.collection("blogs")
-                        .add(blog)
+                        .document(blogId) // Simpan dengan ID spesifik
+                        .set(blog)
                         .addOnSuccessListener {
                             Toast.makeText(requireContext(), "Blog berhasil disimpan", Toast.LENGTH_SHORT).show()
                             findNavController().navigateUp()
                         }
                         .addOnFailureListener { exception ->
-                            Log.e(TAG, "Error saving blog", exception)
+                            Log.e(TAG, "Gagal menyimpan blog", exception)
                             Toast.makeText(requireContext(), "Gagal menyimpan blog", Toast.LENGTH_SHORT).show()
                         }
                 } else {
-                    Log.e(TAG, "User not found")
+                    Log.e(TAG, "User tidak ditemukan")
                     Toast.makeText(requireContext(), "User tidak ditemukan", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { exception ->
-                // Handle error pengambilan username
-                Log.e(TAG, "Error getting user document", exception)
+                Log.e(TAG, "Gagal mendapatkan data user", exception)
                 Toast.makeText(requireContext(), "Gagal mengambil data user", Toast.LENGTH_SHORT).show()
             }
     }
+
+
 }

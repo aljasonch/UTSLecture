@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.utslecture.R
 import com.example.utslecture.data.Blog
-import java.text.SimpleDateFormat
-import java.util.*
+import android.text.format.DateUtils
 
 class BlogAdapter(private val blogs: List<Blog>, private val onNewsClick: (Blog) -> Unit) :
     RecyclerView.Adapter<BlogAdapter.NewsViewHolder>() {
@@ -36,8 +35,15 @@ class BlogAdapter(private val blogs: List<Blog>, private val onNewsClick: (Blog)
 
         fun bind(blog: Blog) {
             authorTextView.text = blog.username
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-            dateTextView.text = blog.uploadDate?.let { dateFormat.format(it) } ?: ""
+            val relativeTime = blog.uploadDate?.let {
+                DateUtils.getRelativeTimeSpanString(
+                    it.time,
+                    System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS
+                ).toString()
+            } ?: ""
+
+            dateTextView.text = relativeTime
             titleTextView.text = blog.title
 
             Glide.with(itemView.context)

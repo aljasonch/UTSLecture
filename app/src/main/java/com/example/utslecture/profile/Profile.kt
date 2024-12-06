@@ -2,11 +2,13 @@ package com.example.utslecture.profile
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -15,8 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.utslecture.R
 import com.example.utslecture.data.Blog
+import com.example.utslecture.data.ProfileUser
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
 class Profile : Fragment() {
@@ -27,12 +33,44 @@ class Profile : Fragment() {
     private lateinit var blogAdapter: ProfileBlogAdapter
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private var userId: String = ""
+    private var username: String = ""
+    private lateinit var usernameTextView: TextView // Menambahkan TextView untuk menampilkan username
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        firestore = Firebase.firestore
+        auth = Firebase.auth
+        userId = auth.currentUser?.uid ?: ""
+
+        // Ambil data profileUser dari Firestore untuk mendapatkan username
+        if (userId.isNotEmpty()) {
+            firestore.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val profileUser = document.toObject(ProfileUser::class.java)
+                        username = profileUser?.username ?: "Anonymous"
+
+                        // Setelah username diambil, tampilkan di TextView
+                        usernameTextView.text = username
+                    } else {
+                        Log.d("ProfileFragment", "No such document")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("ProfileFragment", "Error getting user document", e)
+                }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +78,7 @@ class Profile : Fragment() {
 
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
-
+        usernameTextView = view.findViewById(R.id.username_profile)
         editProfileButton = view.findViewById(R.id.edit_profile_button)
         settingButton = view.findViewById(R.id.SettingButton)
         createBlogButton = view.findViewById(R.id.CreateBlogButton)
@@ -104,7 +142,10 @@ class Profile : Fragment() {
                     "content" to blog.content,
                     "image" to blog.image
                 )
-                findNavController().navigate(R.id.action_ProfileFragment_to_updateBlogFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_ProfileFragment_to_updateBlogFragment,
+                    bundle
+                )
             }
         }
     }
@@ -118,7 +159,8 @@ class Profile : Fragment() {
             .setTitle("Hapus Blog")
             .setMessage("Apakah Anda yakin ingin menghapus blog ini?")
             .setPositiveButton("Hapus") { _, _ ->
-                val blogQuery = firestore.collection("blogs").whereEqualTo("title", blog.title) // Query menggunakan field unik
+                val blogQuery = firestore.collection("blogs")
+                    .whereEqualTo("title", blog.title) // Query menggunakan field unik
                 blogQuery.get()
                     .addOnSuccessListener { querySnapshot ->
                         if (querySnapshot.documents.isNotEmpty()) {
