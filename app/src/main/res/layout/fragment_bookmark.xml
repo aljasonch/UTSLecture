@@ -11,6 +11,7 @@
     tools:context=".bookmark.Bookmark">
 
     <TextView
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/bookmark"
@@ -24,178 +25,165 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/edit_text_background"
         android:queryHint="Search" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewBookmarked"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/category"
+            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="@string/category"
+            android:textSize="24sp"
+            android:layout_marginVertical="16dp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:layout_width="match_parent"
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/grid_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:alignmentMode="alignMargins"
+            app:columnCount="2"
+            app:rowCount="2"
+            app:rowOrderPreserved="false">
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                app:layout_columnWeight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/category"
-                android:textSize="24sp"
-                android:layout_marginVertical="16dp"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:gravity="center">
 
-            <androidx.gridlayout.widget.GridLayout
-                android:layout_width="match_parent"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/politics_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="8dp"
+                    app:layout_gravity="fill_horizontal">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/politics_image" />
+
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/international_politics"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+
+                app:layout_columnWeight="1"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:alignmentMode="alignMargins"
-                app:columnCount="2"
-                app:rowCount="2"
-                app:rowOrderPreserved="false">
+                android:orientation="vertical"
+                android:gravity="center">
 
-                <!-- CardViews for Categories -->
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    app:layout_columnWeight="1"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/finance_card"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="8dp"
+                    app:layout_gravity="fill_horizontal">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/politics_card"
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        android:layout_margin="8dp"
-                        app:layout_gravity="fill_horizontal">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/politics_image" />
-
-                    </androidx.cardview.widget.CardView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/international_politics"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="6dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_3_news"
-                        android:textAlignment="center"
-                        android:textColor="@color/gray"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-
-                    app:layout_columnWeight="1"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/finance_image" />
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:text="@string/finance"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/finance_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        android:layout_margin="8dp"
-                        app:layout_gravity="fill_horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/finance_image" />
-                    </androidx.cardview.widget.CardView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/finance"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="6dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_3_news"
-                        android:textAlignment="center"
-                        android:textColor="@color/gray"/>
-                </LinearLayout>
+                app:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-
-                    app:layout_columnWeight="1"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/education_card"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="8dp"
+                    app:layout_gravity="fill_horizontal">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/education_card"
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        android:layout_margin="8dp"
-                        app:layout_gravity="fill_horizontal">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/education_image" />
-                    </androidx.cardview.widget.CardView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/education"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="6dp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_3_news"
-                        android:textAlignment="center"
-                        android:textColor="@color/gray"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-
-                    app:layout_columnWeight="1"
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/education_image" />
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:text="@string/education"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/health_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        android:layout_margin="8dp"
-                        app:layout_gravity="fill_horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/health_image" />
-                    </androidx.cardview.widget.CardView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/health"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="6dp" />
-                    <TextView
+                app:layout_columnWeight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/health_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="8dp"
+                    app:layout_gravity="fill_horizontal">
+
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_3_news"
-                        android:textAlignment="center"
-                        android:textColor="@color/gray"/>
-                </LinearLayout>
-            </androidx.gridlayout.widget.GridLayout>
-        </LinearLayout>
+                        android:layout_height="100dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/health_image" />
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/health"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+        </androidx.gridlayout.widget.GridLayout>
+    </LinearLayout>
 </LinearLayout>

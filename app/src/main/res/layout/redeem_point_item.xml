@@ -41,6 +41,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:textAllCaps="false"
                 android:id="@+id/btn_redeem"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
