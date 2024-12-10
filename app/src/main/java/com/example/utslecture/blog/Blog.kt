@@ -137,6 +137,8 @@ class Blog : Fragment() {
         updateLikesCountUI()
         updateLikeButtonUI()
         updateBookmarkButtonUI()
+        checkIfLiked()
+        checkIfBookmarked()
 
     }
 
@@ -322,5 +324,29 @@ class Blog : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+    private fun checkIfLiked() {
+        val currentUserId = auth.currentUser?.uid ?: return
+        val likeRef = firestore.collection("blogs").document(blogId).collection("likes").document(currentUserId)
+
+        likeRef.get().addOnSuccessListener { document ->
+            isLiked = document.exists()
+            updateLikeButtonUI()
+        }.addOnFailureListener { exception ->
+            showToast("Error: ${exception.message}")
+        }
+    }
+    private fun checkIfBookmarked() {
+        val currentUserId = auth.currentUser?.uid ?: return
+        val bookmarkRef = firestore.collection("blogs").document(blogId).collection("bookmarks").document(currentUserId)
+        bookmarkRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                bookmarkButton.setImageResource(R.drawable.bookmark_added)
+            } else {
+                bookmarkButton.setImageResource(R.drawable.bookmark_button)
+            }
+        }.addOnFailureListener { exception ->
+            showToast("Error: ${exception.message}")
+        }
     }
 }

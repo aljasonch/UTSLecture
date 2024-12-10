@@ -45,7 +45,11 @@
         android:id="@+id/Bookmark"
         android:name="com.example.utslecture.bookmark.Bookmark"
         android:label="Bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmark_to_blog"
+            app:destination="@id/Blog" />
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
@@ -166,5 +170,17 @@
         <action
             android:id="@+id/action_editProfilePictureFragment_to_ProfileFragment"
             app:destination="@id/Profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/BookmarkedCategory"
+        android:name="com.example.utslecture.bookmark.BookmarkedCategory"
+        android:label="BookmarkedCategory"
+        tools:layout="@layout/fragment_category">
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_bookmarkedCategory_to_blog"
+            app:destination="@id/Blog" />
     </fragment>
 </navigation>

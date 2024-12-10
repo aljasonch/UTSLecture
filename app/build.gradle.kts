@@ -1,3 +1,11 @@
+import java.util.Properties
+
+val properties = Properties()
+val localProperties = File(rootProject.rootDir, "local.properties")
+if (localProperties.exists()) {
+    properties.load(localProperties.inputStream())
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -14,7 +22,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
+        buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY") ?: ""}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -27,6 +35,9 @@ android {
             )
         }
     }
+    buildFeatures {
+        buildConfig = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -38,6 +49,7 @@ android {
 
 dependencies {
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.generativeai)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation(libs.play.services.auth)
     implementation(libs.androidx.recyclerview)

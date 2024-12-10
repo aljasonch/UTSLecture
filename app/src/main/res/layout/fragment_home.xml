@@ -7,20 +7,22 @@
     android:layout_marginBottom="72dp"
     android:orientation="vertical"
     tools:context=".home.Home">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/username_profile"
+            android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/welcomeUser"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ImageView
@@ -41,6 +43,7 @@
 
         <TextView
             android:layout_width="0dp"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
@@ -53,10 +56,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:cardBackgroundColor="@color/primary_button"
-            app:cardCornerRadius="25dp"
-           >
+            app:cardCornerRadius="25dp">
 
             <Button
+                android:textAllCaps="false"
+                android:id="@+id/generateButton"
                 android:layout_width="150dp"
                 android:layout_height="36dp"
                 android:backgroundTint="@android:color/transparent"
@@ -72,12 +76,13 @@
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
+        android:layout_marginHorizontal="20dp"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
@@ -86,10 +91,10 @@
                 android:layout_marginVertical="16dp"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-               >
+                app:cardCornerRadius="20dp">
 
                 <TextView
+                    android:id="@+id/summaryTextView1"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -105,10 +110,10 @@
                 android:layout_marginVertical="16dp"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-               >
+                app:cardCornerRadius="20dp">
 
                 <TextView
+                    android:id="@+id/summaryTextView2"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -124,10 +129,10 @@
                 android:layout_marginVertical="16dp"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-               >
+                app:cardCornerRadius="20dp">
 
                 <TextView
+                    android:id="@+id/summaryTextView3"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -143,6 +148,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
+        android:textColor="@color/black"
         android:text="@string/recommendation"
         android:textSize="16sp"
         android:textStyle="bold" />

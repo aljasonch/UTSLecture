@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import android.widget.ImageView
 import android.widget.SimpleExpandableListAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.utslecture.R
 
 class Help : Fragment() {
@@ -16,7 +18,10 @@ class Help : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_help, container, false)
-
+        val backButton = view.findViewById<ImageView>(R.id.backButton)
+        backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
         val expandableListView = view.findViewById<ExpandableListView>(R.id.expandableListView)
         val questions = listOf(
             "Bagaimana cara menggunakan aplikasi ini?",

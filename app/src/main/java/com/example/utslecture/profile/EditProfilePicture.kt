@@ -46,6 +46,10 @@ class EditProfilePicture : Fragment() {
         val view = inflater.inflate(R.layout.fragment_edit_profile_picture, container, false)
         previewImage = view.findViewById(R.id.previewImage)
         saveButton = view.findViewById(R.id.saveButtonProfilePicture)
+        val backButton = view.findViewById<ImageView>(R.id.backButton)
+        backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
         return view
     }
 

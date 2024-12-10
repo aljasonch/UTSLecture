@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,51 +9,72 @@
     android:padding="16dp"
     tools:context=".Setting.Help">
 
-    <!-- Root LinearLayout inside ScrollView -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/back"
+            android:src="@drawable/back_button"
+            app:layout_constraintBottom_toBottomOf="@+id/helpTitleTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/helpTitleTextView" />
 
         <TextView
             android:id="@+id/helpTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="Help"
             android:textColor="#333333"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helpTitleTextView">
 
-            <ExpandableListView
-                android:id="@+id/expandableListView"
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="vertical">
+
+                <ExpandableListView
+                    android:id="@+id/expandableListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:isScrollContainer="false" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/contactHeaderTextView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:isScrollContainer="false" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="10dp"
+                android:text="Hubungi Kami"
+                android:textColor="#333333"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contactTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jika Anda membutuhkan bantuan lebih lanjut, silakan hubungi kami di support@ailog.com"
+                android:textColor="#666666" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/contactHeaderTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="10dp"
-            android:text="Hubungi Kami"
-            android:textColor="#333333"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/contactTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Jika Anda membutuhkan bantuan lebih lanjut, silakan hubungi kami di support@aplikasianda.com"
-            android:textColor="#666666" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

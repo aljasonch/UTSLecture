@@ -16,9 +16,19 @@ import com.example.utslecture.R
 import com.example.utslecture.blog.BlogAdapter
 import com.example.utslecture.data.Blog
 import com.google.firebase.firestore.FirebaseFirestore
+import android.widget.TextView
+import androidx.gridlayout.widget.GridLayout
 
 class Search : Fragment() {
     private val db = FirebaseFirestore.getInstance()
+    private lateinit var recyclerViewPopular: RecyclerView
+    private lateinit var recyclerViewRecent: RecyclerView
+    private lateinit var recyclerViewTrending: RecyclerView
+    private lateinit var categoryTitle: TextView
+    private lateinit var gridLayout: GridLayout
+    private lateinit var popularTitle: TextView
+    private lateinit var recentTitle: TextView
+    private lateinit var trendingTitle: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +39,47 @@ class Search : Fragment() {
         val searchView = view.findViewById<SearchView>(R.id.searchView)
         searchView.queryHint = "Search"
 
-        // Set click listeners for the CardViews
+        categoryTitle = view.findViewById(R.id.category_title)
+        gridLayout = view.findViewById(R.id.grid_layout)
+        popularTitle = view.findViewById(R.id.popular_title)
+        recentTitle = view.findViewById(R.id.new_title)
+        trendingTitle = view.findViewById(R.id.trending_title)
+        recyclerViewPopular = view.findViewById(R.id.recyclerViewPopular)
+        recyclerViewRecent = view.findViewById(R.id.recyclerViewRecent)
+        recyclerViewTrending = view.findViewById(R.id.recyclerViewTrending)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val separatorViews = findViewsWithTag(view, "separator")
+                if (!newText.isNullOrBlank()) {
+                    searchBlogs(newText)
+                    categoryTitle.visibility = View.GONE
+                    gridLayout.visibility = View.GONE
+                    popularTitle.visibility = View.GONE
+                    recentTitle.visibility = View.GONE
+                    trendingTitle.visibility = View.GONE
+                    for (separator in separatorViews) {
+                        separator.visibility = View.GONE
+                    }
+                } else {
+                    displayInitialData()
+                    categoryTitle.visibility = View.VISIBLE
+                    gridLayout.visibility = View.VISIBLE
+                    popularTitle.visibility = View.VISIBLE
+                    recentTitle.visibility = View.VISIBLE
+                    trendingTitle.visibility = View.VISIBLE
+                    for (separator in separatorViews) {
+                        separator.visibility = View.VISIBLE
+                    }
+                }
+                return true
+            }
+        })
+
         view.findViewById<CardView>(R.id.politics_card).setOnClickListener {
             navigateToCategory("International Politics")
         }
@@ -59,14 +109,57 @@ class Search : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerViewPopular = view.findViewById<RecyclerView>(R.id.recyclerViewPopular)
-        val recyclerViewRecent = view.findViewById<RecyclerView>(R.id.recyclerViewRecent)
-        val recyclerViewTrending = view.findViewById<RecyclerView>(R.id.recyclerViewTrending)
-
         recyclerViewPopular.isNestedScrollingEnabled = false
         recyclerViewRecent.isNestedScrollingEnabled = false
         recyclerViewTrending.isNestedScrollingEnabled = false
 
+        displayInitialData()
+    }
+
+    private fun searchBlogs(query: String) {
+        val endQuery = query + "\uf8ff"
+
+        db.collection("blogs")
+            .whereGreaterThanOrEqualTo("title", query)
+            .whereLessThanOrEqualTo("title", endQuery)
+            .get()
+            .addOnSuccessListener { documents ->
+                val allBlogs = documents.mapNotNull { it.toObject(Blog::class.java) }
+                val filteredBlogs = allBlogs.filter { it.title.contains(query, ignoreCase = true) }
+
+                Log.d("SearchFragment", "Search Results: ${filteredBlogs.size}")
+
+                val navigateToBlogDetail: (Blog) -> Unit = { blog ->
+                    val bundle = bundleOf(
+                        "blogId" to blog.blogId,
+                        "title" to blog.title,
+                        "content" to blog.content,
+                        "image" to blog.image,
+                        "username" to blog.username,
+                        "uploadDate" to blog.uploadDate?.time.toString()
+                    )
+                    findNavController().navigate(R.id.action_search_to_blog, bundle)
+                }
+
+                recyclerViewPopular.adapter = BlogAdapter(filteredBlogs, navigateToBlogDetail)
+                recyclerViewRecent.adapter = BlogAdapter(filteredBlogs, navigateToBlogDetail)
+                recyclerViewTrending.adapter = BlogAdapter(filteredBlogs, navigateToBlogDetail)
+
+                recyclerViewPopular.layoutManager = LinearLayoutManager(requireContext())
+                recyclerViewRecent.layoutManager = LinearLayoutManager(requireContext())
+                recyclerViewTrending.layoutManager = LinearLayoutManager(requireContext())
+
+                recyclerViewPopular.adapter?.notifyDataSetChanged()
+                recyclerViewRecent.adapter?.notifyDataSetChanged()
+                recyclerViewTrending.adapter?.notifyDataSetChanged()
+
+            }
+            .addOnFailureListener { exception ->
+                Log.w("SearchFragment", "Error getting documents: ", exception)
+            }
+    }
+
+    private fun displayInitialData() {
         db.collection("blogs")
             .get()
             .addOnSuccessListener { documents ->
@@ -113,5 +206,22 @@ class Search : Fragment() {
             }
     }
 
+    private fun findViewsWithTag(root: View, tag: String): List<View> {
+        val views = mutableListOf<View>()
+        val rootView = root as? ViewGroup ?: return views
 
+        for (i in 0 until rootView.childCount) {
+            val child = rootView.getChildAt(i)
+            if (child is ViewGroup) {
+                views.addAll(findViewsWithTag(child, tag))
+            }
+
+            val tagObj = child.tag
+            if (tagObj != null && tagObj == tag) {
+                views.add(child)
+            }
+        }
+
+        return views
+    }
 }

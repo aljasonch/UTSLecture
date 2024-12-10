@@ -72,4 +72,6 @@
         <item>Education</item>
         <item>Health</item>
     </string-array>
+    <string name="channel_name">My Channel Name</string>
+    <string name="channel_description">My Channel Description</string>
 </resources>
