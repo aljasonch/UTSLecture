@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,7 @@ class Search : Fragment() {
 
         // Set click listeners for the CardViews
         view.findViewById<CardView>(R.id.politics_card).setOnClickListener {
-            navigateToCategory("Politics")
+            navigateToCategory("International Politics")
         }
 
         view.findViewById<CardView>(R.id.finance_card).setOnClickListener {
@@ -84,13 +85,14 @@ class Search : Fragment() {
                 Log.d("SearchFragment", "Trending Blogs: ${trendingBlogs.size}")
 
                 val navigateToBlogDetail: (Blog) -> Unit = { blog ->
-                    val bundle = Bundle().apply {
-                        putString("title", blog.title)
-                        putString("content", blog.content)
-                        putString("image", blog.image)
-                        putString("username", blog.username)
-                        putString("uploadDate", blog.uploadDate?.time.toString())
-                    }
+                    val bundle = bundleOf(
+                        "blogId" to blog.blogId,
+                        "title" to blog.title,
+                        "content" to blog.content,
+                        "image" to blog.image,
+                        "username" to blog.username,
+                        "uploadDate" to blog.uploadDate?.time.toString()
+                    )
                     findNavController().navigate(R.id.action_search_to_blog, bundle)
                 }
 
@@ -110,5 +112,6 @@ class Search : Fragment() {
                 Log.w("SearchFragment", "Error getting documents: ", exception)
             }
     }
+
 
 }

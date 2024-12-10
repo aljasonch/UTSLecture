@@ -67,9 +67,9 @@
     <string name="from_gallery">From Gallery</string>
     <string name="help_info"><![CDATA[Help & Info]]></string>
     <string-array name="categories">
-        <item>Technology</item>
-        <item>Business</item>
-        <item>Sports</item>
-        <item>Entertainment</item>
+        <item>International Politics</item>
+        <item>Finance</item>
+        <item>Education</item>
+        <item>Health</item>
     </string-array>
 </resources>

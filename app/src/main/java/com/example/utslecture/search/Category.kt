@@ -48,32 +48,36 @@ class Category : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val newsRecyclerView = view.findViewById<RecyclerView>(R.id.newsRecyclerView)
+        newsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        db.collection("blogs")
-            .whereEqualTo("category", category) // Filter langsung di query
-            .get()
-            .addOnSuccessListener { documents ->
-                val filteredBlogs = documents.mapNotNull { document ->
-                    document.toObject(Blog::class.java)
-                }
-
-                val adapter = BlogAdapter(filteredBlogs) { blog ->
-                    val bundle = Bundle().apply { // apply untuk inisialisasi bundle
-                        putString("title", blog.title)
-                        putString("content", blog.content)
-                        putString("image", blog.image)
-                        putString("username", blog.username)
-                        putString("uploadDate", blog.uploadDate?.time.toString())
+        if (category != null) {
+            db.collection("blogs")
+                .whereEqualTo("category", category)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val filteredBlogs = documents.mapNotNull { document ->
+                        document.toObject(Blog::class.java)
                     }
-                    findNavController().navigate(R.id.action_category_to_blog, bundle)
+
+                    val adapter = BlogAdapter(filteredBlogs) { blog ->
+                        val bundle = Bundle().apply {
+                            putString("blogId", blog.blogId)
+                            putString("title", blog.title)
+                            putString("content", blog.content)
+                            putString("image", blog.image)
+                            putString("username", blog.username)
+                            putString("uploadDate", blog.uploadDate?.time.toString())
+                        }
+                        findNavController().navigate(R.id.action_category_to_blog, bundle)
+                    }
+
+                    newsRecyclerView.adapter = adapter
                 }
-
-                newsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                newsRecyclerView.adapter = adapter
-
-            }
-            .addOnFailureListener { exception ->
-                Log.w("Category", "Error getting documents: ", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.w("Category", "Error getting documents: ", exception)
+                }
+        } else {
+            Log.e("Category", "Category is null")
+        }
     }
 }

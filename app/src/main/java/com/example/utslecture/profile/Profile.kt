@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.utslecture.R
 import com.example.utslecture.data.Blog
 import com.example.utslecture.data.ProfileUser
@@ -35,34 +36,14 @@ class Profile : Fragment() {
     private lateinit var auth: FirebaseAuth
     private var userId: String = ""
     private var username: String = ""
-    private lateinit var usernameTextView: TextView // Menambahkan TextView untuk menampilkan username
+    private lateinit var profileImageView: ImageView
+    private lateinit var usernameTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firestore = Firebase.firestore
         auth = Firebase.auth
         userId = auth.currentUser?.uid ?: ""
-
-        // Ambil data profileUser dari Firestore untuk mendapatkan username
-        if (userId.isNotEmpty()) {
-            firestore.collection("users")
-                .document(userId)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        val profileUser = document.toObject(ProfileUser::class.java)
-                        username = profileUser?.username ?: "Anonymous"
-
-                        // Setelah username diambil, tampilkan di TextView
-                        usernameTextView.text = username
-                    } else {
-                        Log.d("ProfileFragment", "No such document")
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e("ProfileFragment", "Error getting user document", e)
-                }
-        }
     }
 
     override fun onCreateView(
@@ -70,6 +51,7 @@ class Profile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        profileImageView = view.findViewById(R.id.profileImage)
         return view
     }
 
@@ -86,6 +68,7 @@ class Profile : Fragment() {
 
         setupRecyclerView()
         loadUserBlogs()
+        loadUserProfile() // Safely update the TextView here after initialization
 
         editProfileButton.setOnClickListener {
             findNavController().navigate(R.id.editProfileFragment)
@@ -101,7 +84,8 @@ class Profile : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        blogAdapter = ProfileBlogAdapter(listOf(),
+        blogAdapter = ProfileBlogAdapter(
+            listOf(),
             onUpdateClickListener = { blog ->
                 navigateToUpdateBlog(blog)
             },
@@ -160,7 +144,7 @@ class Profile : Fragment() {
             .setMessage("Apakah Anda yakin ingin menghapus blog ini?")
             .setPositiveButton("Hapus") { _, _ ->
                 val blogQuery = firestore.collection("blogs")
-                    .whereEqualTo("title", blog.title) // Query menggunakan field unik
+                    .whereEqualTo("title", blog.title)
                 blogQuery.get()
                     .addOnSuccessListener { querySnapshot ->
                         if (querySnapshot.documents.isNotEmpty()) {
@@ -193,10 +177,40 @@ class Profile : Fragment() {
         val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
         storageReference.delete()
             .addOnSuccessListener {
-                // Hapus gambar berhasil
+                // Image deleted successfully
             }
             .addOnFailureListener { exception ->
                 showToast("Error saat menghapus gambar: ${exception.message}")
             }
+    }
+
+    private fun loadUserProfile() {
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            firestore.collection("users").document(userId).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val profileUser = document.toObject(ProfileUser::class.java)
+                        if (profileUser != null) {
+                            username = profileUser.username
+                            usernameTextView.text = username // Safely set here
+
+                            if (!profileUser.profilePicture.isNullOrEmpty()) {
+                                Glide.with(this)
+                                    .load(profileUser.profilePicture)
+                                    .placeholder(R.drawable.profile_photo)
+                                    .error(R.drawable.profile_photo)
+                                    .circleCrop()
+                                    .into(profileImageView)
+                            }
+                        }
+                    } else {
+                        Log.d("ProfileFragment", "No such document")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("ProfileFragment", "Error getting user document", e)
+                }
+        }
     }
 }

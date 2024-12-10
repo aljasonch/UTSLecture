@@ -1,5 +1,6 @@
 package com.example.utslecture.blog
 
+import com.example.utslecture.data.Blog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,13 +19,16 @@ import com.bumptech.glide.Glide
 import com.example.utslecture.R
 import com.example.utslecture.data.Komentar
 import com.example.utslecture.data.ProfileUser
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class Blog : Fragment() {
 
@@ -33,8 +37,13 @@ class Blog : Fragment() {
     private lateinit var commentAdapter: CommentAdapter
     private val commentsList: MutableList<Komentar> = mutableListOf()
     private var blogId: String = ""
-    private var userId : String = ""
-    private var username : String = ""
+    private var userId: String = ""
+    private var username: String = ""
+    private val firestore = Firebase.firestore
+    private lateinit var likeButton: ImageView
+    private lateinit var bookmarkButton: ImageView
+    private lateinit var likesCountTextView: TextView
+    private var isLiked: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +72,7 @@ class Blog : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_blog, container, false)
 
         val backButton = view.findViewById<ImageView>(R.id.backButton)
@@ -74,7 +84,17 @@ class Blog : Fragment() {
         postCommentButton.setOnClickListener {
             postComment()
         }
+        likesCountTextView = view.findViewById(R.id.likesCountTextView)
+        likeButton = view.findViewById(R.id.likeButton)
+        bookmarkButton = view.findViewById(R.id.bookmarkButton)
 
+        likeButton.setOnClickListener {
+            toggleLike()
+        }
+
+        bookmarkButton.setOnClickListener {
+            toggleBookmark()
+        }
         return view
     }
 
@@ -87,7 +107,11 @@ class Blog : Fragment() {
             val content = it.getString("content")
             val image = it.getString("image")
             val blogUsername = it.getString("username")
-            val uploadDate = it.getString("uploadDate")?.toLongOrNull()?.let { timestamp -> Date(timestamp) }
+            val uploadDate = it.getString("uploadDate")?.toLongOrNull()?.let { timestamp ->
+                Date(
+                    timestamp
+                )
+            }
             view.findViewById<TextView>(R.id.detail_news_title).text = title
             view.findViewById<TextView>(R.id.detail_news_content).text = content
 
@@ -99,9 +123,6 @@ class Blog : Fragment() {
                     android.text.format.DateUtils.MINUTE_IN_MILLIS
                 ).toString()
             } ?: "Unknown time"
-            Log.d("BlogFragment", "uploadDate: $uploadDate")
-            Log.d("BlogFragment", "Relative time: $relativeTime")
-            Log.d("BlogFragment", "Metadata text: ${metadataTextView.text}")
 
             metadataTextView.text = "$blogUsername • $relativeTime"
 
@@ -111,8 +132,11 @@ class Blog : Fragment() {
                 .error(R.drawable.error_image)
                 .into(view.findViewById<ImageView>(R.id.detail_news_image))
             setupRecyclerView(view)
-            loadComments()
         }
+        loadComments()
+        updateLikesCountUI()
+        updateLikeButtonUI()
+        updateBookmarkButtonUI()
 
     }
 
@@ -128,15 +152,19 @@ class Blog : Fragment() {
         val commentText = commentInput?.text.toString().trim()
 
         if (commentText.isNotEmpty() && blogId.isNotEmpty() && userId.isNotEmpty() && username.isNotEmpty()) {
-            val currentDate = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(Date())
-            val newComment = Komentar(userId, blogId, commentText, username, currentDate)
+            val newComment = hashMapOf(
+                "userId" to userId,
+                "blogId" to blogId,
+                "content" to commentText,
+                "username" to username,
+                "uploadDate" to FieldValue.serverTimestamp()
+            )
 
             db.collection("comments")
                 .add(newComment)
                 .addOnSuccessListener { documentReference ->
                     Log.d("BlogFragment", "Comment added with ID: ${documentReference.id}")
                     commentInput?.text?.clear()
-                    loadComments()
                     Toast.makeText(context, "Comment added successfully", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
@@ -152,7 +180,7 @@ class Blog : Fragment() {
                 Toast.makeText(context, "blogId is empty", Toast.LENGTH_SHORT).show()
             }
 
-            if(username.isEmpty()) {
+            if (username.isEmpty()) {
                 Toast.makeText(context, "username is empty", Toast.LENGTH_SHORT).show()
             }
         }
@@ -162,36 +190,137 @@ class Blog : Fragment() {
         if (blogId.isNotEmpty()) {
             db.collection("comments")
                 .whereEqualTo("blogId", blogId)
-                .orderBy("uploadDate")
                 .addSnapshotListener { snapshots, e ->
                     if (e != null) {
                         Log.w("BlogFragment", "listen:error", e)
                         return@addSnapshotListener
                     }
 
-                    commentsList.clear()
-                    for (dc in snapshots!!.documentChanges) {
-                        when (dc.type) {
-                            com.google.firebase.firestore.DocumentChange.Type.ADDED -> {
-                                val comment = dc.document.toObject(Komentar::class.java)
-                                commentsList.add(comment)
-                            }
-                            com.google.firebase.firestore.DocumentChange.Type.MODIFIED -> {
-                                val comment = dc.document.toObject(Komentar::class.java)
-                                val index = commentsList.indexOfFirst { it.uploadDate == comment.uploadDate }
-                                if (index != -1) {
-                                    commentsList[index] = comment
-                                }
+                    if (snapshots != null) {
+                        commentsList.clear()
+                        for (document in snapshots.documents) {
+                            val commentData = document.data
+                            Log.d("BlogFragment", "Comment Data: $commentData")
 
-                            }
-                            com.google.firebase.firestore.DocumentChange.Type.REMOVED -> {
-                                val comment = dc.document.toObject(Komentar::class.java)
-                                commentsList.remove(comment)
-                            }
+                            val uploadDateTimestamp = commentData?.get("uploadDate") as? Timestamp
+                            val uploadDate = uploadDateTimestamp?.toDate() ?: Date()
+
+                            val dateString = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(uploadDate)
+
+                            val comment = Komentar(
+                                userId = commentData?.get("userId") as String? ?: "",
+                                blogId = commentData?.get("blogId") as String? ?: "",
+                                content = commentData?.get("content") as String? ?: "",
+                                username = commentData?.get("username") as String? ?: "",
+                                uploadDate = uploadDate,
+                                uploadDateString = dateString
+                            )
+
+                            commentsList.add(comment)
                         }
+                        commentAdapter.notifyDataSetChanged()
                     }
-                    commentAdapter.notifyDataSetChanged()
                 }
+        } else {
+            Log.w("BlogFragment", "Blog ID is empty, cannot load comments.")
         }
+    }
+
+    private fun toggleLike() {
+        val currentUserId = auth.currentUser?.uid ?: return
+        val blogRef = firestore.collection("blogs").document(blogId)
+        val likeRef = blogRef.collection("likes").document(currentUserId)
+
+        likeRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                blogRef.update("likes", FieldValue.increment(-1))
+                likeRef.delete()
+                    .addOnSuccessListener {
+                        updateLikeStatus(false)
+                    }
+                    .addOnFailureListener { exception ->
+                        showToast("Error unliking: ${exception.message}")
+                        blogRef.update("likes", FieldValue.increment(1))
+                    }
+
+            } else {
+
+                blogRef.update("likes", FieldValue.increment(1))
+                likeRef.set(hashMapOf("userId" to currentUserId)).addOnSuccessListener {
+                    updateLikeStatus(true)
+                }
+                    .addOnFailureListener { exception ->
+                        showToast("Error liking: ${exception.message}")
+                        blogRef.update("likes", FieldValue.increment(-1))
+                    }
+            }
+
+            updateLikeButtonUI()
+        }.addOnFailureListener { exception ->
+            showToast("Error: ${exception.message}")
+        }
+    }
+
+    private fun updateLikeStatus(liked: Boolean) {
+        isLiked = liked
+        updateLikeButtonUI()
+        updateLikesCountUI()
+    }
+
+    private fun updateLikesCountUI() {
+        val blogRef = firestore.collection("blogs").document(blogId)
+        blogRef.addSnapshotListener { documentSnapshot, exception ->
+            if (exception != null) {
+                showToast("Error: ${exception.message}")
+                return@addSnapshotListener
+            }
+            val blogData = documentSnapshot?.toObject(Blog::class.java)
+            val likeCount = blogData?.likes ?: 0
+            likesCountTextView.text = "$likeCount Likes"
+        }
+    }
+
+    private fun updateLikeButtonUI() {
+        if (isLiked) {
+            likeButton.setImageResource(R.drawable.like_added)
+        } else {
+            likeButton.setImageResource(R.drawable.like_button)
+        }
+    }
+
+    private fun updateBookmarkButtonUI() {
+        val currentUserId = auth.currentUser?.uid ?: return
+        val bookmarkRef =
+            firestore.collection("blogs").document(blogId).collection("bookmarks")
+                .document(currentUserId)
+        bookmarkRef.get().addOnSuccessListener { document ->
+            val isBookmarked = document.exists()
+
+            if (isBookmarked) {
+                bookmarkButton.setImageResource(R.drawable.bookmark_added)
+            } else {
+                bookmarkButton.setImageResource(R.drawable.bookmark_button)
+            }
+        }
+    }
+    private fun toggleBookmark() {
+        val currentUserId = auth.currentUser?.uid ?: return
+        val bookmarkRef =
+            firestore.collection("blogs").document(blogId).collection("bookmarks")
+                .document(currentUserId)
+        bookmarkRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                bookmarkRef.delete()
+            } else {
+                bookmarkRef.set(hashMapOf("userId" to currentUserId))
+            }
+            updateBookmarkButtonUI()
+        }.addOnFailureListener { exception ->
+            showToast("Error: ${exception.message}")
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

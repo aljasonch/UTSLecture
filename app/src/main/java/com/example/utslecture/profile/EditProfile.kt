@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -14,22 +16,29 @@ import com.example.utslecture.R
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.bumptech.glide.Glide
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
 
 class EditProfile : Fragment() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
 
     private lateinit var nameInput: EditText
     private lateinit var usernameInput: EditText
     private lateinit var emailInput: EditText
     private lateinit var phoneInput: EditText
     private lateinit var bioInput: EditText
-    private lateinit var saveButton: MaterialTextView // Gunakan MaterialTextView
+    private lateinit var saveButton: MaterialTextView
+    private lateinit var editProfileButton: TextView
+    private lateinit var profileImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
     }
 
     override fun onCreateView(
@@ -48,12 +57,19 @@ class EditProfile : Fragment() {
         phoneInput = view.findViewById(R.id.phone_input_field)
         bioInput = view.findViewById(R.id.bio_input_field)
         saveButton = view.findViewById(R.id.save_button)
+        editProfileButton = view.findViewById(R.id.profile_picture)
+        profileImageView = view.findViewById(R.id.profilePicture)
 
         loadUserData()
 
         saveButton.setOnClickListener {
             updateUserProfile()
         }
+
+        editProfileButton.setOnClickListener {
+            findNavController().navigate(R.id.action_editProfileFragment_to_editProfilePictureFragment)
+        }
+
     }
 
     private fun loadUserData() {
@@ -69,6 +85,15 @@ class EditProfile : Fragment() {
                             emailInput.setText(it.email)
                             phoneInput.setText(it.phoneNumber)
                             bioInput.setText(it.bio)
+
+                            if (!it.profilePicture.isNullOrEmpty()) {
+                                Glide.with(this)
+                                    .load(it.profilePicture)
+                                    .placeholder(R.drawable.profile_photo)
+                                    .error(R.drawable.profile_photo)
+                                    .circleCrop()
+                                    .into(profileImageView)
+                            }
                         }
                     } else {
                         Log.d("EditProfile", "No such document")
@@ -83,8 +108,8 @@ class EditProfile : Fragment() {
     private fun updateUserProfile() {
         val userId = auth.currentUser?.uid
         if (userId == null) {
-            Toast.makeText(requireContext(), "com.example.utslecture.data.User is not logged in", Toast.LENGTH_SHORT).show()
-            return // Hentikan eksekusi jika userId null
+            Toast.makeText(requireContext(), "User is not logged in", Toast.LENGTH_SHORT).show()
+            return
         }
 
         val updatedProfile = ProfileUser(
@@ -93,13 +118,13 @@ class EditProfile : Fragment() {
             email = emailInput.text.toString().trim(),
             phoneNumber = phoneInput.text.toString().trim(),
             bio = bioInput.text.toString().trim(),
-            userId = userId // Sertakan userId di sini
+            userId = userId
         )
 
-        firestore.collection("users").document(userId).set(updatedProfile)
+        firestore.collection("users").document(userId).set(updatedProfile, SetOptions.merge())
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.Profile) // Navigasi setelah sukses
+                findNavController().navigate(R.id.Profile)
             }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Failed to update profile: ${e.message}", Toast.LENGTH_SHORT).show()

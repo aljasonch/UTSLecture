@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="72dp"
+    android:layout_marginBottom="96dp"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +16,7 @@
             android:id="@+id/toplayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -24,17 +25,31 @@
                 android:id="@+id/backButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_gravity="start"
                 android:contentDescription="@string/back"
                 android:src="@drawable/back_button" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/likeButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/bookmark"
+                android:src="@drawable/like_button" />
 
             <ImageView
                 android:id="@+id/bookmarkButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="24dp"
-                android:contentDescription="@string/back"
-                android:src="@drawable/back_button" />
+                android:layout_gravity="end"
+                android:contentDescription="@string/bookmark"
+                android:src="@drawable/bookmark_button" />
 
         </LinearLayout>
 
@@ -44,10 +59,10 @@
             android:layout_height="200dp"
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            tools:src="@drawable/images_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toplayout" />
+            app:layout_constraintTop_toBottomOf="@+id/toplayout"
+            tools:src="@drawable/images_photo" />
 
         <TextView
             android:id="@+id/detail_news_title"
@@ -57,22 +72,46 @@
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="Judul Berita"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_news_image" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_news_image"
+            tools:text="Judul Berita" />
 
-        <TextView
-            android:id="@+id/detail_news_metadata"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/detail_news_metadata_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:textColor="#666666"
-            android:textSize="14sp"
-            tools:text="Penulis • Tanggal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_news_title" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_news_title">
+
+            <TextView
+                android:id="@+id/detail_news_metadata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#666666"
+                android:textSize="16sp"
+                tools:text="Penulis • Tanggal" />
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/bookmark"
+                android:src="@drawable/like_added" />
+
+            <TextView
+                android:id="@+id/likesCountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 1 "
+                android:layout_marginStart="8dp"
+                android:textColor="#666666"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/detail_news_content"
@@ -82,10 +121,10 @@
             android:lineSpacingMultiplier="1.5"
             android:textColor="#333333"
             android:textSize="16sp"
-            tools:text="Isi berita..."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_news_metadata" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_news_metadata_layout"
+            tools:text="Isi berita..." />
 
         <TextView
             android:id="@+id/comment_label"
@@ -93,9 +132,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Komentar"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_news_content" />
@@ -105,10 +144,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:background="@drawable/comment_input_background"
             android:hint="  Tulis komentar anda..."
             android:minHeight="48dp"
             android:padding="8dp"
-            android:background="@drawable/comment_input_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/comment_label" />
@@ -118,9 +157,9 @@
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginTop="8dp"
+            android:backgroundTint="@color/primary_button"
             android:text="Kirim"
             android:textSize="14sp"
-            android:backgroundTint="@color/primary_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/comment_input" />
 

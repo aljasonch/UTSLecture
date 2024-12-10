@@ -7,8 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.utslecture.R
 import com.example.utslecture.data.Komentar
+import java.util.Locale
 
-class CommentAdapter(private val comments: List<Komentar>) :
+class CommentAdapter(private val comments: MutableList<Komentar>) :
     RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
@@ -29,9 +30,13 @@ class CommentAdapter(private val comments: List<Komentar>) :
         private val commentTextView: TextView = itemView.findViewById(R.id.comment_text)
 
         fun bind(comment: Komentar) {
-            usernameTextView.text = comment.username + ":"
+            usernameTextView.text = comment.username
             commentTextView.text = comment.content
-
         }
+    }
+    fun updateData(newComments: List<Komentar>) {
+        comments.clear()
+        comments.addAll(newComments)
+        notifyDataSetChanged()
     }
 }

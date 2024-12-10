@@ -123,7 +123,6 @@ class CreateBlog : Fragment() {
             return
         }
 
-        // Generate blogId menggunakan UUID
         val blogId = UUID.randomUUID().toString()
 
         db.collection("users").document(userId)
@@ -133,23 +132,21 @@ class CreateBlog : Fragment() {
                     val profileUser = document.toObject(ProfileUser::class.java)
                     val username = profileUser?.username ?: ""
 
-                    // Membuat objek Blog dengan data baru
                     val blog = Blog(
-                        blogId = blogId, // ID unik blog
+                        blogId = blogId,
                         userId = userId,
                         title = title,
                         image = imageUrl,
                         content = content,
-                        views = 0, // Jumlah views default adalah 0
-                        likes = 0, // Jumlah likes default adalah 0
+                        views = 0,
+                        likes = 0,
                         username = username,
-                        uploadDate = Date(), // Tanggal saat ini
+                        uploadDate = Date(),
                         category = selectedCategory
                     )
 
-                    // Menyimpan blog ke Firestore dengan ID spesifik
                     db.collection("blogs")
-                        .document(blogId) // Simpan dengan ID spesifik
+                        .document(blogId)
                         .set(blog)
                         .addOnSuccessListener {
                             Toast.makeText(requireContext(), "Blog berhasil disimpan", Toast.LENGTH_SHORT).show()

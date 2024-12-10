@@ -64,19 +64,17 @@
         android:id="@+id/editProfileFragment"
         android:name="com.example.utslecture.profile.EditProfile"
         android:label="Edit Profile"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_editProfilePictureFragment"
+            app:destination="@id/editProfilePictureFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.utslecture.auth.Register"
         android:label="Register"
         tools:layout="@layout/fragment_register" />
-
-    <fragment
-        android:id="@+id/editProfilePictureFragment"
-        android:name="com.example.utslecture.profile.EditProfilePicture"
-        android:label="Edit Profile Picture"
-        tools:layout="@layout/fragment_edit_profile_picture" />
 
     <fragment
         android:id="@+id/Category"
@@ -158,6 +156,15 @@
         tools:layout="@layout/fragment_update_blog">
         <action
             android:id="@+id/action_updateBlogFragment_to_ProfileFragment"
+            app:destination="@id/Profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfilePictureFragment"
+        android:name="com.example.utslecture.profile.EditProfilePicture"
+        android:label="Edit Profile Picture"
+        tools:layout="@layout/fragment_edit_profile_picture">
+        <action
+            android:id="@+id/action_editProfilePictureFragment_to_ProfileFragment"
             app:destination="@id/Profile" />
     </fragment>
 </navigation>
