@@ -17,16 +17,17 @@
 
         <TextView
             android:id="@+id/username_profile"
-            android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/inter_semibold"
             android:text="@string/welcomeUser"
+            android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/notificationButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
@@ -43,11 +44,12 @@
 
         <TextView
             android:layout_width="0dp"
-            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:fontFamily="@font/inter_semibold"
             android:text="@string/snap_news"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -59,14 +61,15 @@
             app:cardCornerRadius="25dp">
 
             <Button
-                android:textAllCaps="false"
                 android:id="@+id/generateButton"
                 android:layout_width="150dp"
                 android:layout_height="36dp"
                 android:backgroundTint="@android:color/transparent"
                 android:elevation="0dp"
+                android:fontFamily="@font/inter_semibold"
                 android:gravity="center"
                 android:text="@string/generate"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
         </androidx.cardview.widget.CardView>
@@ -93,14 +96,29 @@
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="20dp">
 
-                <TextView
-                    android:id="@+id/summaryTextView1"
+                <LinearLayout
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:padding="12dp"
-                    android:text="@string/summary_ai"
-                    android:textColor="@android:color/black" />
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/summaryTextView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/inter"
+                        android:paddingTop="8dp"
+                        android:text="@string/summary_ai"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -112,14 +130,29 @@
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="20dp">
 
-                <TextView
-                    android:id="@+id/summaryTextView2"
+                <LinearLayout
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:padding="12dp"
-                    android:text="@string/summary_ai"
-                    android:textColor="@android:color/black" />
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/summaryTextView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/inter"
+                        android:paddingTop="8dp"
+                        android:text="@string/summary_ai"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -131,14 +164,29 @@
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="20dp">
 
-                <TextView
-                    android:id="@+id/summaryTextView3"
+                <LinearLayout
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:padding="12dp"
-                    android:text="@string/summary_ai"
-                    android:textColor="@android:color/black" />
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/summaryTextView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/inter"
+                        android:paddingTop="8dp"
+                        android:text="@string/summary_ai"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -148,8 +196,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:textColor="@color/black"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/recommendation"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 

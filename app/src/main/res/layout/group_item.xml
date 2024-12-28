@@ -3,7 +3,8 @@
     android:id="@+id/groupTextView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fontFamily="@font/inter"
     android:padding="16dp"
-    android:textStyle="bold"
     android:textColor="#000"
-    android:textSize="16sp" />
+    android:textSize="16sp"
+    android:textStyle="bold" />

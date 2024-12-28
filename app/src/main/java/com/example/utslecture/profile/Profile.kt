@@ -68,7 +68,7 @@ class Profile : Fragment() {
 
         setupRecyclerView()
         loadUserBlogs()
-        loadUserProfile() // Safely update the TextView here after initialization
+        loadUserProfile()
 
         editProfileButton.setOnClickListener {
             findNavController().navigate(R.id.editProfileFragment)
@@ -177,7 +177,6 @@ class Profile : Fragment() {
         val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
         storageReference.delete()
             .addOnSuccessListener {
-                // Image deleted successfully
             }
             .addOnFailureListener { exception ->
                 showToast("Error saat menghapus gambar: ${exception.message}")
@@ -193,7 +192,7 @@ class Profile : Fragment() {
                         val profileUser = document.toObject(ProfileUser::class.java)
                         if (profileUser != null) {
                             username = profileUser.username
-                            usernameTextView.text = username // Safely set here
+                            usernameTextView.text = username
 
                             if (!profileUser.profilePicture.isNullOrEmpty()) {
                                 Glide.with(this)

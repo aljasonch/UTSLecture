@@ -28,7 +28,6 @@ class Login : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
-    // Activity Result Launcher for Google Sign-In
     private val signInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -134,14 +133,11 @@ class Login : Fragment() {
                         val uid = it.uid
                         val userDocRef = firestore.collection("users").document(uid)
 
-                        // Cek apakah dokumen sudah ada
                         userDocRef.get()
                             .addOnSuccessListener { document ->
                                 if (document.exists()) {
-                                    // Dokumen ada, update field tertentu kecuali 'name'
                                     val profileUpdates = hashMapOf<String, Any>(
                                         "email" to acct?.email.orEmpty()
-                                        // Tambahkan field lain yang ingin diupdate, kecuali 'name'
                                     )
 
                                     userDocRef.set(profileUpdates, SetOptions.merge())
@@ -165,12 +161,10 @@ class Login : Fragment() {
                                             ).show()
                                         }
                                 } else {
-                                    // Dokumen tidak ada, buat dokumen baru dengan semua field
                                     val profileUser = ProfileUser(
                                         userId = uid,
                                         email = acct?.email.orEmpty(),
                                         name = acct?.displayName.orEmpty()
-                                        // Tambahkan field awal lainnya di sini
                                     )
 
                                     userDocRef.set(profileUser)

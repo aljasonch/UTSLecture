@@ -15,6 +15,7 @@ import com.example.utslecture.R
 import com.example.utslecture.blog.BlogAdapter
 import com.example.utslecture.data.Blog
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 
 class Category : Fragment() {
     private val db = FirebaseFirestore.getInstance()
@@ -60,6 +61,8 @@ class Category : Fragment() {
                     }
 
                     val adapter = BlogAdapter(filteredBlogs) { blog ->
+                        incrementBlogViews(blog.blogId)
+
                         val bundle = Bundle().apply {
                             putString("blogId", blog.blogId)
                             putString("title", blog.title)
@@ -79,5 +82,12 @@ class Category : Fragment() {
         } else {
             Log.e("Category", "Category is null")
         }
+    }
+
+    private fun incrementBlogViews(blogId: String) {
+        val blogRef = db.collection("blogs").document(blogId)
+        blogRef.update("views", FieldValue.increment(1))
+            .addOnSuccessListener { Log.d("Category", "Blog views incremented for blogId: $blogId") }
+            .addOnFailureListener { e -> Log.e("Category", "Error incrementing blog views", e) }
     }
 }

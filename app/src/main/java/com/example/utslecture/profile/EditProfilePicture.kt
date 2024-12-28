@@ -85,7 +85,6 @@ class EditProfilePicture : Fragment() {
             return
         }
 
-        // Upload image to Firebase Storage
         val storageRef = storage.reference
         val imageFileName = "profile_pictures/${userId}/${UUID.randomUUID()}.jpg"
         val imageRef = storageRef.child(imageFileName)
@@ -96,11 +95,8 @@ class EditProfilePicture : Fragment() {
 
         val uploadTask = imageRef.putBytes(imageData)
         uploadTask.addOnSuccessListener {
-            // Get the download URL
             imageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
-
-                // Update profile in Firestore with the image URL
                 updateUserProfile(userId, imageUrl)
             }
         }.addOnFailureListener {
@@ -114,7 +110,7 @@ class EditProfilePicture : Fragment() {
         userRef.update("profilePicture", imageUrl)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Profile picture updated successfully", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.Profile) // Navigate back to profile
+                findNavController().navigate(R.id.Profile)
             }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Failed to update profile picture: ${e.message}", Toast.LENGTH_SHORT).show()

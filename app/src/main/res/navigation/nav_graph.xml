@@ -13,8 +13,19 @@
         <action
             android:id="@+id/action_home_to_blog"
             app:destination="@id/Blog" />
+        <action
+            android:id="@+id/action_home_to_notification"
+            app:destination="@id/Notification" />
     </fragment>
-
+    <fragment
+        android:id="@+id/Notification"
+        android:name="com.example.utslecture.home.Notifications"
+        android:label="Notification"
+        tools:layout="@layout/fragment_notifications">
+        <action
+            android:id="@+id/action_notification_to_home"
+            app:destination="@id/Home" />
+    </fragment>
     <fragment
         android:id="@+id/Search"
         android:name="com.example.utslecture.search.Search"
@@ -45,7 +56,7 @@
         android:id="@+id/Bookmark"
         android:name="com.example.utslecture.bookmark.Bookmark"
         android:label="Bookmark"
-        tools:layout="@layout/fragment_bookmark" >
+        tools:layout="@layout/fragment_bookmark">
         <action
             android:id="@+id/action_bookmark_to_blog"
             app:destination="@id/Blog" />
@@ -68,7 +79,7 @@
         android:id="@+id/editProfileFragment"
         android:name="com.example.utslecture.profile.EditProfile"
         android:label="Edit Profile"
-        tools:layout="@layout/fragment_edit_profile" >
+        tools:layout="@layout/fragment_edit_profile">
         <action
             android:id="@+id/action_editProfileFragment_to_editProfilePictureFragment"
             app:destination="@id/editProfilePictureFragment" />

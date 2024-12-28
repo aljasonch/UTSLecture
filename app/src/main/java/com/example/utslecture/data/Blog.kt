@@ -12,5 +12,7 @@ data class Blog(
     val likes: Int = 0,
     val username: String = "",
     val uploadDate: Date? = null,
-    val category: String = ""
+    val category: String = "",
+    var viewMilestoneNotified: Boolean = false,
+    var likeMilestoneNotified: Boolean = false
 )

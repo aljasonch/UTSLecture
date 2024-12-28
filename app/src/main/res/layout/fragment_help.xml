@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/inter_bold"
             android:text="Help"
             android:textColor="#333333"
             android:textSize="24sp"
@@ -61,8 +62,9 @@
                 android:id="@+id/contactHeaderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/inter_semibold"
                 android:text="Hubungi Kami"
                 android:textColor="#333333"
                 android:textSize="18sp"
@@ -72,6 +74,7 @@
                 android:id="@+id/contactTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
                 android:text="Jika Anda membutuhkan bantuan lebih lanjut, silakan hubungi kami di support@ailog.com"
                 android:textColor="#666666" />
         </LinearLayout>

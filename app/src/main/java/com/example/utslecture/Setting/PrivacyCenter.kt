@@ -23,7 +23,6 @@ class PrivacyCenter : Fragment() {
         backButton.setOnClickListener {
             findNavController().popBackStack()
         }
-        // Inflate the layout for this fragment
         return view
     }
 

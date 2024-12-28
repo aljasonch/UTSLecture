@@ -33,80 +33,87 @@
         android:id="@+id/appNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_bold"
         android:text="Ailog"
+        android:textColor="#333333"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/appIconImageView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/appIconImageView" />
 
     <TextView
         android:id="@+id/versionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter"
         android:text="Versi 1.0.0"
         android:textColor="#666666"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/appNameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/appNameTextView" />
 
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter"
         android:justificationMode="inter_word"
         android:text="@string/app_desc"
         android:textColor="#666666"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/versionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/versionTextView" />
 
     <TextView
         android:id="@+id/developerHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="Dikembangkan oleh"
+        android:textColor="#333333"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTextView" />
 
     <TextView
         android:id="@+id/developerNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/dev_name"
         android:textColor="#666666"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/developerHeader"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/developerHeader" />
 
     <TextView
         android:id="@+id/contactHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="Hubungi Kami"
+        android:textColor="#333333"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/developerNameTextView"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/developerNameTextView" />
 
     <TextView
         android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter"
         android:text="support@ailog.com"
         android:textColor="#0000FF"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/contactHeader"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contactHeader" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

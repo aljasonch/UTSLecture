@@ -12,13 +12,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.utslecture.BuildConfig
 import com.example.utslecture.R
 import com.example.utslecture.data.Komentar
 import com.example.utslecture.data.ProfileUser
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -29,6 +32,10 @@ import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.content
+import kotlinx.coroutines.launch
+import androidx.appcompat.app.AlertDialog
 
 class Blog : Fragment() {
 
@@ -44,6 +51,13 @@ class Blog : Fragment() {
     private lateinit var bookmarkButton: ImageView
     private lateinit var likesCountTextView: TextView
     private var isLiked: Boolean = false
+    private lateinit var summaryTextView: TextView
+    private lateinit var fabSummary: FloatingActionButton
+    private var isSummaryVisible = false
+    private val generativeModel = GenerativeModel(
+        modelName = "gemini-1.5-flash",
+        apiKey = BuildConfig.API_KEY
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +101,12 @@ class Blog : Fragment() {
         likesCountTextView = view.findViewById(R.id.likesCountTextView)
         likeButton = view.findViewById(R.id.likeButton)
         bookmarkButton = view.findViewById(R.id.bookmarkButton)
+        summaryTextView = view.findViewById(R.id.detail_news_summary)
+        fabSummary = view.findViewById(R.id.fab_summary)
+
+        fabSummary.setOnClickListener {
+            showSummaryDialog()
+        }
 
         likeButton.setOnClickListener {
             toggleLike()
@@ -132,6 +152,7 @@ class Blog : Fragment() {
                 .error(R.drawable.error_image)
                 .into(view.findViewById<ImageView>(R.id.detail_news_image))
             setupRecyclerView(view)
+            content?.let { it1 -> summarizeContent(it1) }
         }
         loadComments()
         updateLikesCountUI()
@@ -305,6 +326,7 @@ class Blog : Fragment() {
             }
         }
     }
+
     private fun toggleBookmark() {
         val currentUserId = auth.currentUser?.uid ?: return
         val bookmarkRef =
@@ -325,6 +347,7 @@ class Blog : Fragment() {
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
     private fun checkIfLiked() {
         val currentUserId = auth.currentUser?.uid ?: return
         val likeRef = firestore.collection("blogs").document(blogId).collection("likes").document(currentUserId)
@@ -336,6 +359,7 @@ class Blog : Fragment() {
             showToast("Error: ${exception.message}")
         }
     }
+
     private fun checkIfBookmarked() {
         val currentUserId = auth.currentUser?.uid ?: return
         val bookmarkRef = firestore.collection("blogs").document(blogId).collection("bookmarks").document(currentUserId)
@@ -347,6 +371,34 @@ class Blog : Fragment() {
             }
         }.addOnFailureListener { exception ->
             showToast("Error: ${exception.message}")
+        }
+    }
+
+    private fun showSummaryDialog() {
+        val summary = summaryTextView.text.toString()
+
+        val dialog = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
+            .setTitle("Summary")
+            .setMessage(summary)
+            .setPositiveButton("Close") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        dialog.show()
+    }
+
+    private fun summarizeContent(content: String) {
+        lifecycleScope.launch {
+            try {
+                val prompt = "Summarize the following text in 1 sentences:\n\n$content"
+                val response = generativeModel.generateContent(content { text(prompt) })
+                val summary = response.text
+                summaryTextView.text = summary ?: "Could not generate summary."
+            } catch (e: Exception) {
+                Log.e("GeminiAPI", "Exception during API call", e)
+                summaryTextView.text = "Error generating summary."
+            }
         }
     }
 }

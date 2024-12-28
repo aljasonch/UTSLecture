@@ -72,6 +72,7 @@
         <item>Education</item>
         <item>Health</item>
     </string-array>
-    <string name="channel_name">My Channel Name</string>
-    <string name="channel_description">My Channel Description</string>
+    <string name="channel_name">Ailog</string>
+    <string name="channel_description">An AI Blog Apps</string>
+
 </resources>

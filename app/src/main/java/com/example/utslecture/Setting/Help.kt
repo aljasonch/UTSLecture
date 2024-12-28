@@ -50,13 +50,13 @@ class Help : Fragment() {
         val adapter = SimpleExpandableListAdapter(
             requireContext(),
             questions.map { mapOf("Pertanyaan" to it) },
-            R.layout.group_item,  // Use the custom layout for the group
+            R.layout.group_item,
             arrayOf("Pertanyaan"),
-            intArrayOf(R.id.groupTextView),  // Reference the TextView ID in group_item.xml
+            intArrayOf(R.id.groupTextView),
             childData,
-            R.layout.child_item,  // Use the custom layout for the child
+            R.layout.child_item,
             arrayOf("Jawaban"),
-            intArrayOf(R.id.childTextView)  // Reference the TextView ID in child_item.xml
+            intArrayOf(R.id.childTextView)
         )
 
         expandableListView.setAdapter(adapter)

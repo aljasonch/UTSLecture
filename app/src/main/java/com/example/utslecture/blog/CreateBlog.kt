@@ -8,11 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.utslecture.R
@@ -31,6 +27,9 @@ class CreateBlog : Fragment() {
     private lateinit var imageContainer: FrameLayout
     private lateinit var imageView: ImageView
     private lateinit var categorySpinner: Spinner
+    private lateinit var progressOverlay: FrameLayout
+    private lateinit var progressBar: ProgressBar
+
     private var imageUri: Uri? = null
 
     private val db = FirebaseFirestore.getInstance()
@@ -60,12 +59,15 @@ class CreateBlog : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         saveButton = view.findViewById(R.id.save_button)
         titleInput = view.findViewById(R.id.title_input)
         descriptionInput = view.findViewById(R.id.description_input)
         imageContainer = view.findViewById(R.id.image_container)
         imageView = view.findViewById(R.id.image_view)
         categorySpinner = view.findViewById(R.id.category_spinner)
+        progressOverlay = view.findViewById(R.id.progress_overlay)
+        progressBar = view.findViewById(R.id.progress_bar)
 
         imageContainer.setOnClickListener {
             openFileChooser()
@@ -91,7 +93,10 @@ class CreateBlog : Fragment() {
         }
     }
 
+
     private fun uploadImageAndSaveBlog() {
+        showLoading(true)
+
         if (imageUri == null) {
             saveBlog("")
             return
@@ -109,11 +114,13 @@ class CreateBlog : Fragment() {
                 }.addOnFailureListener { exception ->
                     Log.e(TAG, "Error getting download URL", exception)
                     Toast.makeText(requireContext(), "Gagal mendapatkan URL gambar", Toast.LENGTH_SHORT).show()
+                    showLoading(false)
                 }
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Error uploading image", exception)
                 Toast.makeText(requireContext(), "Gagal mengunggah gambar", Toast.LENGTH_SHORT).show()
+                showLoading(false)
             }
     }
 
@@ -125,6 +132,7 @@ class CreateBlog : Fragment() {
 
         if (title.isEmpty() || content.isEmpty()) {
             Toast.makeText(requireContext(), "Judul dan konten tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            showLoading(false)
             return
         }
 
@@ -160,17 +168,29 @@ class CreateBlog : Fragment() {
                         .addOnFailureListener { exception ->
                             Log.e(TAG, "Gagal menyimpan blog", exception)
                             Toast.makeText(requireContext(), "Gagal menyimpan blog", Toast.LENGTH_SHORT).show()
+                            showLoading(false)
                         }
                 } else {
                     Log.e(TAG, "User tidak ditemukan")
                     Toast.makeText(requireContext(), "User tidak ditemukan", Toast.LENGTH_SHORT).show()
+                    showLoading(false)
                 }
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Gagal mendapatkan data user", exception)
                 Toast.makeText(requireContext(), "Gagal mengambil data user", Toast.LENGTH_SHORT).show()
+                showLoading(false)
             }
     }
 
 
+    private fun showLoading(show: Boolean) {
+        if (show) {
+            progressOverlay.visibility = View.VISIBLE
+            saveButton.isEnabled = false
+        } else {
+            progressOverlay.visibility = View.GONE
+            saveButton.isEnabled = true
+        }
+    }
 }

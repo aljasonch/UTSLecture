@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="28dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/login"
         android:textColor="@color/black"
         android:textSize="28sp"
@@ -30,6 +31,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableStart="@drawable/email_logo"
         android:drawablePadding="12dp"
+        android:fontFamily="@font/inter"
         android:hint="@string/email_input_message"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="24dp"
@@ -48,6 +50,7 @@
         android:background="@drawable/edit_text_background"
         android:drawableStart="@drawable/password_logo"
         android:drawablePadding="8dp"
+        android:fontFamily="@font/inter"
         android:hint="@string/password_input_message"
         android:inputType="textPassword"
         android:paddingHorizontal="24dp"
@@ -56,19 +59,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/email_input_field"
         app:layout_constraintTop_toBottomOf="@+id/email_input_field" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/forgot_password"
-        android:textAlignment="textEnd"
-        android:textColor="@color/primary_button"
-        app:layout_constraintEnd_toEndOf="@+id/password_input_field"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/password_input_field"
-        app:layout_constraintTop_toBottomOf="@+id/password_input_field" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -86,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
+            android:fontFamily="@font/inter"
             android:text="@string/account"
             android:textColor="@color/black"
             android:textSize="14sp" />
@@ -95,6 +86,7 @@
             android:id="@+id/register_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
             android:text="@string/register_text"
             android:textColor="#3DC2EC"
             android:textSize="14sp" />
@@ -107,14 +99,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_color_button"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/submit_button"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/password_input_field"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="@+id/password_input_field"
+        app:layout_constraintTop_toBottomOf="@+id/password_input_field" />
 
     <LinearLayout
         android:id="@+id/textView2"
@@ -131,7 +124,7 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_weight="1"
             android:background="@color/gray" />
 
@@ -139,13 +132,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
+            android:fontFamily="@font/inter"
             android:text="or"
             android:textColor="@color/gray"
             android:textSize="14sp" />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_weight="1"
             android:background="@color/gray" />
     </LinearLayout>
@@ -158,6 +152,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button"
         android:drawableStart="@drawable/google_icon"
+        android:fontFamily="@font/inter"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:text="Continue with Google"
@@ -183,11 +178,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/inter"
         android:text="@string/login_hint"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/add_coffee_title"
         app:layout_constraintStart_toStartOf="@+id/add_coffee_title"
         app:layout_constraintTop_toBottomOf="@+id/add_coffee_title" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

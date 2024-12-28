@@ -21,32 +21,38 @@
             android:layout_gravity="center"
             android:contentDescription="@string/back"
             android:src="@drawable/back_button" />
+
         <TextView
-            android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/inter_bold"
             android:text="@string/edit_profile"
+            android:textColor="@color/black"
             android:textSize="28sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/saveButtonProfilePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
+            android:fontFamily="@font/inter"
+            android:text="@string/save"
             android:textColor="@color/primary_button"
-            android:text="@string/save"/>
+            android:textSize="20sp" />
     </LinearLayout>
+
     <TextView
-        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20sp"
         android:layout_marginTop="48dp"
-        android:textStyle="bold"
-        android:text="@string/preview_camera"/>
+        android:fontFamily="@font/inter_semibold"
+        android:text="@string/preview_camera"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
     <ImageView
         android:id="@+id/previewImage"
         android:layout_width="250dp"

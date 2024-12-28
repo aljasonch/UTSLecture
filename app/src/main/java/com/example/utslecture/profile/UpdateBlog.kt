@@ -31,7 +31,8 @@ class UpdateBlog : Fragment() {
     private lateinit var titleInput: EditText
     private lateinit var categorySpinner: Spinner
     private lateinit var descriptionInput: EditText
-
+    private lateinit var progressOverlay: FrameLayout
+    private lateinit var progressBar: ProgressBar
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,6 +57,8 @@ class UpdateBlog : Fragment() {
         titleInput = view.findViewById<EditText>(R.id.update_title_input)
         categorySpinner = view.findViewById<Spinner>(R.id.update_category_spinner)
         descriptionInput = view.findViewById<EditText>(R.id.update_description_input)
+        progressOverlay = view.findViewById(R.id.progress_overlay)
+        progressBar = view.findViewById(R.id.progress_bar)
         val imageView = view.findViewById<ImageView>(R.id.update_image_view)
         val imagePlaceholder = view.findViewById<LinearLayout>(R.id.update_image_placeholder)
 
@@ -69,7 +72,7 @@ class UpdateBlog : Fragment() {
 
                     titleInput.setText(blog?.title)
                     descriptionInput.setText(blog?.content)
-                    imageUri = blog?.image ?: ""  // Gunakan elvis operator untuk default value
+                    imageUri = blog?.image ?: ""
                     Glide.with(this).load(imageUri).into(imageView)
 
                     if (imageUri.isNotEmpty()) {
@@ -184,6 +187,15 @@ class UpdateBlog : Fragment() {
 
     companion object {
         private const val REQUEST_CODE = 100
+    }
+    private fun showLoading(show: Boolean) {
+        if (show) {
+            progressOverlay.visibility = View.VISIBLE
+            updateButton.isEnabled = false
+        } else {
+            progressOverlay.visibility = View.GONE
+            updateButton.isEnabled = true
+        }
     }
 
 }

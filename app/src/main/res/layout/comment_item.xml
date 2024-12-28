@@ -9,17 +9,20 @@
         android:id="@+id/comment_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
         android:text="Username"
-        android:textStyle="bold"
+        android:textColor="@color/black"
         android:textSize="16sp"
-        android:textColor="@color/black" />
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/comment_text"
-        android:textSize="18sp"
-        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/inter"
         android:text="Isi komentar di sini"
-        android:textColor="#333333"/>
+        android:textColor="#333333"
+        android:textSize="18sp" />
 
 </LinearLayout>

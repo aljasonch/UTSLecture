@@ -37,6 +37,7 @@ android {
     }
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -48,7 +49,7 @@ android {
 }
 
 dependencies {
-    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.glide)
     implementation(libs.generativeai)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation(libs.play.services.auth)

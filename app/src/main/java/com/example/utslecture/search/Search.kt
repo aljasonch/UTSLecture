@@ -18,9 +18,11 @@ import com.example.utslecture.data.Blog
 import com.google.firebase.firestore.FirebaseFirestore
 import android.widget.TextView
 import androidx.gridlayout.widget.GridLayout
+import com.google.firebase.firestore.FieldValue
 
 class Search : Fragment() {
     private val db = FirebaseFirestore.getInstance()
+    private lateinit var recyclerViewSearch: RecyclerView
     private lateinit var recyclerViewPopular: RecyclerView
     private lateinit var recyclerViewRecent: RecyclerView
     private lateinit var recyclerViewTrending: RecyclerView
@@ -44,6 +46,7 @@ class Search : Fragment() {
         popularTitle = view.findViewById(R.id.popular_title)
         recentTitle = view.findViewById(R.id.new_title)
         trendingTitle = view.findViewById(R.id.trending_title)
+        recyclerViewSearch = view.findViewById(R.id.recyclerViewSearch)
         recyclerViewPopular = view.findViewById(R.id.recyclerViewPopular)
         recyclerViewRecent = view.findViewById(R.id.recyclerViewRecent)
         recyclerViewTrending = view.findViewById(R.id.recyclerViewTrending)
@@ -57,14 +60,21 @@ class Search : Fragment() {
                 val separatorViews = findViewsWithTag(view, "separator")
                 if (!newText.isNullOrBlank()) {
                     searchBlogs(newText)
+
                     categoryTitle.visibility = View.GONE
                     gridLayout.visibility = View.GONE
                     popularTitle.visibility = View.GONE
                     recentTitle.visibility = View.GONE
                     trendingTitle.visibility = View.GONE
+                    recyclerViewPopular.visibility = View.GONE
+                    recyclerViewRecent.visibility = View.GONE
+                    recyclerViewTrending.visibility = View.GONE
                     for (separator in separatorViews) {
                         separator.visibility = View.GONE
                     }
+
+                    recyclerViewSearch.visibility = View.VISIBLE
+
                 } else {
                     displayInitialData()
                     categoryTitle.visibility = View.VISIBLE
@@ -72,9 +82,13 @@ class Search : Fragment() {
                     popularTitle.visibility = View.VISIBLE
                     recentTitle.visibility = View.VISIBLE
                     trendingTitle.visibility = View.VISIBLE
+                    recyclerViewPopular.visibility = View.VISIBLE
+                    recyclerViewRecent.visibility = View.VISIBLE
+                    recyclerViewTrending.visibility = View.VISIBLE
                     for (separator in separatorViews) {
                         separator.visibility = View.VISIBLE
                     }
+                    recyclerViewSearch.visibility = View.GONE
                 }
                 return true
             }
@@ -83,15 +97,12 @@ class Search : Fragment() {
         view.findViewById<CardView>(R.id.politics_card).setOnClickListener {
             navigateToCategory("International Politics")
         }
-
         view.findViewById<CardView>(R.id.finance_card).setOnClickListener {
             navigateToCategory("Finance")
         }
-
         view.findViewById<CardView>(R.id.education_card).setOnClickListener {
             navigateToCategory("Education")
         }
-
         view.findViewById<CardView>(R.id.health_card).setOnClickListener {
             navigateToCategory("Health")
         }
@@ -109,9 +120,17 @@ class Search : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recyclerViewSearch.isNestedScrollingEnabled = false
+        recyclerViewSearch.layoutManager = LinearLayoutManager(requireContext())
+
         recyclerViewPopular.isNestedScrollingEnabled = false
+        recyclerViewPopular.layoutManager = LinearLayoutManager(requireContext())
+
         recyclerViewRecent.isNestedScrollingEnabled = false
+        recyclerViewRecent.layoutManager = LinearLayoutManager(requireContext())
+
         recyclerViewTrending.isNestedScrollingEnabled = false
+        recyclerViewTrending.layoutManager = LinearLayoutManager(requireContext())
 
         displayInitialData()
     }
@@ -125,11 +144,14 @@ class Search : Fragment() {
             .get()
             .addOnSuccessListener { documents ->
                 val allBlogs = documents.mapNotNull { it.toObject(Blog::class.java) }
-                val filteredBlogs = allBlogs.filter { it.title.contains(query, ignoreCase = true) }
+                val filteredBlogs = allBlogs.filter {
+                    it.title.contains(query, ignoreCase = true)
+                }
 
                 Log.d("SearchFragment", "Search Results: ${filteredBlogs.size}")
 
                 val navigateToBlogDetail: (Blog) -> Unit = { blog ->
+                    incrementBlogViews(blog.blogId)
                     val bundle = bundleOf(
                         "blogId" to blog.blogId,
                         "title" to blog.title,
@@ -141,18 +163,8 @@ class Search : Fragment() {
                     findNavController().navigate(R.id.action_search_to_blog, bundle)
                 }
 
-                recyclerViewPopular.adapter = BlogAdapter(filteredBlogs, navigateToBlogDetail)
-                recyclerViewRecent.adapter = BlogAdapter(filteredBlogs, navigateToBlogDetail)
-                recyclerViewTrending.adapter = BlogAdapter(filteredBlogs, navigateToBlogDetail)
-
-                recyclerViewPopular.layoutManager = LinearLayoutManager(requireContext())
-                recyclerViewRecent.layoutManager = LinearLayoutManager(requireContext())
-                recyclerViewTrending.layoutManager = LinearLayoutManager(requireContext())
-
-                recyclerViewPopular.adapter?.notifyDataSetChanged()
-                recyclerViewRecent.adapter?.notifyDataSetChanged()
-                recyclerViewTrending.adapter?.notifyDataSetChanged()
-
+                recyclerViewSearch.adapter = BlogAdapter(filteredBlogs, navigateToBlogDetail)
+                recyclerViewSearch.adapter?.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
                 Log.w("SearchFragment", "Error getting documents: ", exception)
@@ -167,17 +179,15 @@ class Search : Fragment() {
 
                 Log.d("SearchFragment", "All Blogs Fetched: ${allBlogs.size}")
 
-                val popularBlogs = allBlogs.sortedByDescending { it.likes }.take(5)
+                val popularBlogs = allBlogs.sortedByDescending { it.likes }.take(4)
                 val recentBlogs = allBlogs.filter { it.uploadDate != null }
                     .sortedByDescending { it.uploadDate }
-                    .take(5)
-                val trendingBlogs = allBlogs.sortedByDescending { it.views }.take(5)
+                    .take(4)
+                val trendingBlogs = allBlogs.sortedByDescending { it.views }.take(4)
 
-                Log.d("SearchFragment", "Popular Blogs: ${popularBlogs.size}")
-                Log.d("SearchFragment", "Recent Blogs: ${recentBlogs.size}")
-                Log.d("SearchFragment", "Trending Blogs: ${trendingBlogs.size}")
 
                 val navigateToBlogDetail: (Blog) -> Unit = { blog ->
+                    incrementBlogViews(blog.blogId)
                     val bundle = bundleOf(
                         "blogId" to blog.blogId,
                         "title" to blog.title,
@@ -193,10 +203,6 @@ class Search : Fragment() {
                 recyclerViewRecent.adapter = BlogAdapter(recentBlogs, navigateToBlogDetail)
                 recyclerViewTrending.adapter = BlogAdapter(trendingBlogs, navigateToBlogDetail)
 
-                recyclerViewPopular.layoutManager = LinearLayoutManager(requireContext())
-                recyclerViewRecent.layoutManager = LinearLayoutManager(requireContext())
-                recyclerViewTrending.layoutManager = LinearLayoutManager(requireContext())
-
                 recyclerViewPopular.adapter?.notifyDataSetChanged()
                 recyclerViewRecent.adapter?.notifyDataSetChanged()
                 recyclerViewTrending.adapter?.notifyDataSetChanged()
@@ -206,6 +212,12 @@ class Search : Fragment() {
             }
     }
 
+    private fun incrementBlogViews(blogId: String) {
+        val blogRef = db.collection("blogs").document(blogId)
+        blogRef.update("views", FieldValue.increment(1))
+            .addOnSuccessListener { Log.d("SearchFragment", "Blog views incremented for blogId: $blogId") }
+            .addOnFailureListener { e -> Log.e("SearchFragment", "Error incrementing blog views", e) }
+    }
     private fun findViewsWithTag(root: View, tag: String): List<View> {
         val views = mutableListOf<View>()
         val rootView = root as? ViewGroup ?: return views

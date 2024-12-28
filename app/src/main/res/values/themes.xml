@@ -16,5 +16,12 @@
         <item name="android:insetBottom">0dp</item>
         <item name="elevation">6dp</item>
         <item name="strokeWidth">0dp</item>
+        <item name="backgroundColor">@color/primary_button</item>
+        <item name="cornerRadius">25dp</item>
+    </style>
+    <style name="AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/primary_button</item>
+        <item name="colorAccent">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 </resources>

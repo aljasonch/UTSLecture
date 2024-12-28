@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_bold"
         android:text="Privacy Center"
         android:textColor="#333333"
         android:textSize="24sp"
@@ -35,94 +36,102 @@
         android:id="@+id/introTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter"
         android:justificationMode="inter_word"
         android:text="Privasi Anda penting bagi kami. Pusat Privasi ini memberikan informasi tentang bagaimana kami mengumpulkan, menggunakan, dan melindungi data Anda."
         android:textColor="#666666"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
     <TextView
         android:id="@+id/dataCollectionHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="Pengumpulan Data"
+        android:textColor="#333333"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/introTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/introTextView" />
 
     <TextView
         android:id="@+id/locationDataText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter"
         android:justificationMode="inter_word"
         android:text="@string/data_location_privacy"
         android:textColor="#666666"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/dataCollectionHeader"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/dataCollectionHeader" />
 
     <TextView
         android:id="@+id/personalInfoText"
         android:layout_width="0dp"
-        android:justificationMode="inter_word"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter"
+        android:justificationMode="inter_word"
         android:text="@string/information_user"
         android:textColor="#666666"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/locationDataText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/locationDataText" />
 
     <TextView
         android:id="@+id/securityHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="Keamanan Data"
+        android:textColor="#333333"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/personalInfoText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/personalInfoText" />
 
     <TextView
         android:id="@+id/securityText"
         android:layout_width="0dp"
-        android:justificationMode="inter_word"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter"
+        android:justificationMode="inter_word"
         android:text="Kami menggunakan langkah-langkah keamanan standar industri untuk melindungi data Anda dari akses yang tidak sah."
         android:textColor="#666666"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/securityHeader"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/securityHeader" />
 
     <TextView
         android:id="@+id/contactHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="Hubungi Kami"
+        android:textColor="#333333"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/securityText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/securityText" />
 
     <TextView
         android:id="@+id/contactText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter"
         android:justificationMode="inter_word"
         android:text="Jika Anda memiliki pertanyaan tentang privasi Anda, silakan hubungi kami di: support@ailog.com"
         android:textColor="#666666"
