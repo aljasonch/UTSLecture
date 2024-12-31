@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels // Changed to activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,11 +26,11 @@ import com.example.utslecture.data.ProfileUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.DocumentChange
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.launch
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.DocumentChange
 import java.util.Date
 
 class Home : BaseAuth() {
@@ -47,7 +47,7 @@ class Home : BaseAuth() {
         apiKey = BuildConfig.API_KEY
     )
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
 
     private lateinit var progressBar1: ProgressBar
     private lateinit var progressBar2: ProgressBar
@@ -63,6 +63,7 @@ class Home : BaseAuth() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         (activity as HomeActivity).showBottomNavigation()
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
@@ -79,26 +80,26 @@ class Home : BaseAuth() {
         progressBar2 = view.findViewById(R.id.progressBar2)
         progressBar3 = view.findViewById(R.id.progressBar3)
 
-        showLoadingIndicators()
-
-
-        usernameTextView.text = "Hello, $username!"
-
         viewModel.summaries.observe(viewLifecycleOwner, Observer { summaries ->
-            if (summaries != null && summaries.isNotEmpty()) {
+            if (!summaries.isNullOrEmpty()) {
                 updateSummaries(summaries)
                 hideLoadingIndicators()
             }
         })
 
         viewModel.summariesGenerated.observe(viewLifecycleOwner, Observer { generated ->
-            if (!generated) {
+            if (!generated && viewModel.summaries.value.isNullOrEmpty()) {
                 fetchAndSummarizeBlogs()
             }
         })
 
         generateButton.setOnClickListener {
             viewModel.resetSummaries()
+            showLoadingIndicators()
+            fetchAndSummarizeBlogs()
+        }
+
+        if (viewModel.summaries.value.isNullOrEmpty()) {
             showLoadingIndicators()
         }
 
@@ -138,9 +139,7 @@ class Home : BaseAuth() {
         db.collection("blogs")
             .get()
             .addOnSuccessListener { documents ->
-                val blogs = documents.mapNotNull { document ->
-                    document.toObject(Blog::class.java)
-                }
+                val blogs = documents.mapNotNull { it.toObject(Blog::class.java) }
                 val recommendBlogs = blogs.shuffled().take(3)
                 val navigateToBlogDetail: (Blog) -> Unit = { blog ->
                     incrementBlogViews(blog.blogId)
@@ -157,6 +156,7 @@ class Home : BaseAuth() {
                 }
 
                 newsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                newsRecyclerView.isNestedScrollingEnabled = false
                 newsRecyclerView.adapter = BlogAdapter(recommendBlogs, navigateToBlogDetail)
 
                 newsRecyclerView.adapter?.notifyDataSetChanged()
@@ -174,6 +174,8 @@ class Home : BaseAuth() {
     }
 
     private fun fetchAndSummarizeBlogs() {
+        if (viewModel.summariesGenerated.value == true) return
+
         showLoadingIndicators()
         db.collection("blogs")
             .get()

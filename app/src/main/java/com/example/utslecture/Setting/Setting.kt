@@ -85,16 +85,16 @@ class Setting : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<LinearLayout>(R.id.helpButton).setOnClickListener {
-            findNavController().navigate(R.id.helpFragment)
+            findNavController().navigate(R.id.action_Settings_to_helpFragment)
         }
         view.findViewById<LinearLayout>(R.id.privacyButton).setOnClickListener {
-            findNavController().navigate(R.id.privacyFragment)
+            findNavController().navigate(R.id.action_Settings_to_privacyFragment)
         }
         view.findViewById<LinearLayout>(R.id.aboutButton).setOnClickListener {
-            findNavController().navigate(R.id.aboutFragment)
+            findNavController().navigate(R.id.action_Settings_to_aboutFragment)
         }
         view.findViewById<LinearLayout>(R.id.redeemButton).setOnClickListener {
-            findNavController().navigate(R.id.redeemFragment)
+            findNavController().navigate(R.id.action_Settings_to_redeemFragment)
         }
     }
 

@@ -20,6 +20,7 @@
             android:layout_height="24dp"
             android:layout_marginEnd="12dp"
             android:layout_gravity="center"
+            android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/back"
             android:src="@drawable/back_button" />
 
@@ -40,6 +41,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/inter"
             android:text="@string/save"
+            android:background="?android:attr/selectableItemBackground"
             android:textColor="@color/primary_button"
             android:textSize="20sp" />
     </LinearLayout>
@@ -69,6 +71,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/inter"
         android:text="@string/edit_profile"
+        android:background="?android:attr/selectableItemBackground"
         android:textAlignment="center"
         android:textColor="@color/primary_button"
         android:textSize="16sp" />

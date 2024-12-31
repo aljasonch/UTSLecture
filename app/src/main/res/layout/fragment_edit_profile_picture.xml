@@ -18,6 +18,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="12dp"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_gravity="center"
             android:contentDescription="@string/back"
             android:src="@drawable/back_button" />
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/inter"
+            android:background="?android:attr/selectableItemBackground"
             android:text="@string/save"
             android:textColor="@color/primary_button"
             android:textSize="20sp" />

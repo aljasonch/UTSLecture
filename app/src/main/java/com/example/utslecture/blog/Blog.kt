@@ -36,6 +36,8 @@ import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.launch
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.NavOptions
+import androidx.navigation.navOptions
 
 class Blog : Fragment() {
 

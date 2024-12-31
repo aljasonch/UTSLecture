@@ -1,4 +1,3 @@
-<!-- res/navigation/nav_graph.xml -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,11 +11,20 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_home_to_blog"
-            app:destination="@id/Blog" />
+            app:destination="@id/Blog"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_home_to_notification"
-            app:destination="@id/Notification" />
+            app:destination="@id/Notification"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/Notification"
         android:name="com.example.utslecture.home.Notifications"
@@ -24,8 +32,13 @@
         tools:layout="@layout/fragment_notifications">
         <action
             android:id="@+id/action_notification_to_home"
-            app:destination="@id/Home" />
+            app:destination="@id/Home"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/Search"
         android:name="com.example.utslecture.search.Search"
@@ -33,10 +46,18 @@
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_search_to_category"
-            app:destination="@id/Category" />
+            app:destination="@id/Category"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_search_to_blog"
-            app:destination="@id/Blog" />
+            app:destination="@id/Blog"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -46,10 +67,32 @@
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profile_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_ProfileFragment_to_updateBlogFragment"
-            app:destination="@id/updateBlogFragment" />
+            app:destination="@id/updateBlogFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_Settings"
+            app:destination="@id/Settings"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_CreateBlog"
+            app:destination="@id/CreateBlog"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -59,7 +102,11 @@
         tools:layout="@layout/fragment_bookmark">
         <action
             android:id="@+id/action_bookmark_to_blog"
-            app:destination="@id/Blog" />
+            app:destination="@id/Blog"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -69,10 +116,18 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/Home" />
+            app:destination="@id/Home"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -82,7 +137,18 @@
         tools:layout="@layout/fragment_edit_profile">
         <action
             android:id="@+id/action_editProfileFragment_to_editProfilePictureFragment"
-            app:destination="@id/editProfilePictureFragment" />
+            app:destination="@id/editProfilePictureFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_ProfileFragment"
+            app:destination="@id/Profile"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -101,14 +167,47 @@
             app:argType="string" />
         <action
             android:id="@+id/action_category_to_blog"
-            app:destination="@id/Blog" />
+            app:destination="@id/Blog"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/Settings"
         android:name="com.example.utslecture.Setting.Setting"
         android:label="@string/settings"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_Settings_to_helpFragment"
+            app:destination="@id/helpFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_Settings_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_Settings_to_privacyFragment"
+            app:destination="@id/privacyFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_Settings_to_redeemFragment"
+            app:destination="@id/redeemFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/Blog"
@@ -123,7 +222,11 @@
         tools:layout="@layout/fragment_create_blog">
         <action
             android:id="@+id/action_createBlog_to_ProfileFragment"
-            app:destination="@id/Profile" />
+            app:destination="@id/Profile"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -133,7 +236,11 @@
         tools:layout="@layout/fragment_help">
         <action
             android:id="@+id/action_helpFragment_to_settingsFragment"
-            app:destination="@id/Settings" />
+            app:destination="@id/Settings"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -143,7 +250,11 @@
         tools:layout="@layout/fragment_about">
         <action
             android:id="@+id/action_aboutFragment_to_settingsFragment"
-            app:destination="@id/Settings" />
+            app:destination="@id/Settings"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -153,8 +264,13 @@
         tools:layout="@layout/fragment_privacy_center">
         <action
             android:id="@+id/action_privacyFragment_to_settingsFragment"
-            app:destination="@id/Settings" />
+            app:destination="@id/Settings"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/redeemFragment"
         android:name="com.example.utslecture.Setting.RedeemPoint"
@@ -162,8 +278,13 @@
         tools:layout="@layout/fragment_redeem_point">
         <action
             android:id="@+id/action_redeemFragment_to_settingsFragment"
-            app:destination="@id/Settings" />
+            app:destination="@id/Settings"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/updateBlogFragment"
         android:name="com.example.utslecture.blog.UpdateBlog"
@@ -171,17 +292,27 @@
         tools:layout="@layout/fragment_update_blog">
         <action
             android:id="@+id/action_updateBlogFragment_to_ProfileFragment"
-            app:destination="@id/Profile" />
+            app:destination="@id/Profile"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/editProfilePictureFragment"
         android:name="com.example.utslecture.profile.EditProfilePicture"
         android:label="Edit Profile Picture"
         tools:layout="@layout/fragment_edit_profile_picture">
         <action
-            android:id="@+id/action_editProfilePictureFragment_to_ProfileFragment"
-            app:destination="@id/Profile" />
+            android:id="@+id/action_editProfilePictureFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/BookmarkedCategory"
         android:name="com.example.utslecture.bookmark.BookmarkedCategory"
@@ -192,6 +323,10 @@
             app:argType="string" />
         <action
             android:id="@+id/action_bookmarkedCategory_to_blog"
-            app:destination="@id/Blog" />
+            app:destination="@id/Blog"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

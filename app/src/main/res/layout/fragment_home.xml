@@ -30,6 +30,7 @@
             android:id="@+id/notificationButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_gravity="center"
             android:contentDescription="@string/notifications"
             android:src="@drawable/notification_logo" />
@@ -62,6 +63,7 @@
 
             <Button
                 android:id="@+id/generateButton"
+                android:background="?android:attr/selectableItemBackground"
                 android:layout_width="150dp"
                 android:layout_height="36dp"
                 android:backgroundTint="@android:color/transparent"
@@ -85,13 +87,13 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="20dp">
@@ -107,6 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:indeterminateTint="@color/primary_button"
                         android:visibility="gone" />
 
                     <TextView
@@ -141,6 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:indeterminateTint="@color/primary_button"
                         android:visibility="gone" />
 
                     <TextView
@@ -175,6 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:indeterminateTint="@color/primary_button"
                         android:visibility="gone" />
 
                     <TextView
@@ -202,18 +207,11 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:paddingTop="12dp"
-        android:scrollbars="none">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:paddingTop="12dp"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
-
-    </ScrollView>
 </LinearLayout>

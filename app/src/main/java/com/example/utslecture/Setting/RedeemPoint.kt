@@ -465,6 +465,7 @@ class RedeemPoint : Fragment() {
                 .addOnSuccessListener {
                     loadRedeemedItems()
                     redeemAdapter.updateUserPoints(userPoints - item.points)
+                    showRedeemCodeDialog(item.name,redeemCode)
                     Log.d("RedeemPoint", "Redeemed ${item.name} with code: $redeemCode")
                 }
                 .addOnFailureListener { e ->

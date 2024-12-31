@@ -71,15 +71,15 @@ class Profile : Fragment() {
         loadUserProfile()
 
         editProfileButton.setOnClickListener {
-            findNavController().navigate(R.id.editProfileFragment)
+            findNavController().navigate(R.id.action_profile_to_editProfileFragment)
         }
 
         settingButton.setOnClickListener {
-            findNavController().navigate(R.id.Settings)
+            findNavController().navigate(R.id.action_ProfileFragment_to_Settings)
         }
 
         createBlogButton.setOnClickListener {
-            findNavController().navigate(R.id.CreateBlog)
+            findNavController().navigate(R.id.action_ProfileFragment_to_CreateBlog)
         }
     }
 

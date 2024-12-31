@@ -18,12 +18,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.storage.FirebaseStorage
 
 class EditProfile : Fragment() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-    private lateinit var storage: FirebaseStorage
 
     private lateinit var nameInput: EditText
     private lateinit var usernameInput: EditText
@@ -34,11 +32,12 @@ class EditProfile : Fragment() {
     private lateinit var editProfileButton: TextView
     private lateinit var profileImageView: ImageView
 
+    private var profilePicture: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-        storage = FirebaseStorage.getInstance()
     }
 
     override fun onCreateView(
@@ -46,10 +45,12 @@ class EditProfile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_edit_profile, container, false)
+
         val backButton = view.findViewById<ImageView>(R.id.backButton)
         backButton.setOnClickListener {
             findNavController().popBackStack()
         }
+
         return view
     }
 
@@ -74,7 +75,6 @@ class EditProfile : Fragment() {
         editProfileButton.setOnClickListener {
             findNavController().navigate(R.id.action_editProfileFragment_to_editProfilePictureFragment)
         }
-
     }
 
     private fun loadUserData() {
@@ -90,6 +90,8 @@ class EditProfile : Fragment() {
                             emailInput.setText(it.email)
                             phoneInput.setText(it.phoneNumber)
                             bioInput.setText(it.bio)
+
+                            profilePicture = it.profilePicture
 
                             if (!it.profilePicture.isNullOrEmpty()) {
                                 Glide.with(this)
@@ -123,16 +125,28 @@ class EditProfile : Fragment() {
             email = emailInput.text.toString().trim(),
             phoneNumber = phoneInput.text.toString().trim(),
             bio = bioInput.text.toString().trim(),
-            userId = userId
+            userId = userId,
+            profilePicture = profilePicture ?: ""
         )
 
         firestore.collection("users").document(userId).set(updatedProfile, SetOptions.merge())
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.Profile)
+                findNavController().navigate(R.id.action_editProfileFragment_to_ProfileFragment)
             }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Failed to update profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+
+    fun updateProfilePicture(url: String) {
+        profilePicture = url
+        Glide.with(this)
+            .load(url)
+            .placeholder(R.drawable.profile_photo)
+            .error(R.drawable.profile_photo)
+            .circleCrop()
+            .into(profileImageView)
     }
 }

@@ -110,7 +110,7 @@ class EditProfilePicture : Fragment() {
         userRef.update("profilePicture", imageUrl)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Profile picture updated successfully", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.Profile)
+                findNavController().navigate(R.id.action_editProfilePictureFragment_to_editProfileFragment)
             }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Failed to update profile picture: ${e.message}", Toast.LENGTH_SHORT).show()
